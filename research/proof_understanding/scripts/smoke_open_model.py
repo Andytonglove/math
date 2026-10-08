@@ -88,7 +88,7 @@ def run(args):
     torch.manual_seed(0)
     started=time.monotonic()
     tokenizer=AutoTokenizer.from_pretrained(args.model,trust_remote_code=False)
-    model=AutoModelForCausalLM.from_pretrained(args.model,torch_dtype=torch.float32,trust_remote_code=False)
+    model=AutoModelForCausalLM.from_pretrained(args.model,torch_dtype=getattr(torch,args.dtype),trust_remote_code=False)
     model.eval()
     data=select(Path(args.input_root))
     results=[]
@@ -119,7 +119,7 @@ def run(args):
         print(f'{i+1}/{len(data)} {task["family"]}/{task["condition"]}: '+
               ("correct" if parsed==task["gold"] else "incorrect/invalid"),
               flush=True)
-    result={"model":args.model,"run_type":"bounded_public_open_weight_CPU_smoke",
+    result={"model":args.model,"dtype":args.dtype,"run_type":"bounded_public_open_weight_CPU_smoke",
             "head_commit":os.environ.get("GITHUB_SHA","unknown"),
             "inputs":len(data),"completed":len(results),
             "model_download_and_inference_seconds":round(time.monotonic()-started,1),
@@ -138,6 +138,7 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument("--input-root",required=True)
     p.add_argument("--model",default="Qwen/Qwen2.5-0.5B-Instruct")
+    p.add_argument("--dtype",choices=("float32","bfloat16"),default="float32")
     p.add_argument("--max-new-tokens",type=int,default=48)
     p.add_argument("--wall-seconds",type=int,default=1100)
     p.add_argument("--output",required=True)
