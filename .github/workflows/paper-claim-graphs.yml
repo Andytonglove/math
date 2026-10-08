@@ -12,6 +12,8 @@ on:
       - research/proof_understanding/tests/test_understanding_oracles.py
       - research/proof_understanding/tests/test_build_understanding_pilot.py
       - research/proof_understanding/tests/test_validate_argument_hypergraphs.py
+      - research/proof_understanding/scripts/quantifier_surgery.py
+      - research/proof_understanding/tests/test_quantifier_surgery.py
       - research/proof_understanding/scripts/determinant_surgery.py
       - research/proof_understanding/tests/test_determinant_surgery.py
       - .github/workflows/paper-claim-graphs.yml
@@ -64,6 +66,12 @@ jobs:
           set -euo pipefail
           python -m unittest discover -s research/proof_understanding/tests -p 'test_determinant_surgery.py' -v
           python research/proof_understanding/scripts/determinant_surgery.py --source-root . --seed 26008 --bases 12 --out-dir "${RUNNER_TEMP}/proof_surgery_017"
+      - name: Test quantified mathematical reasoning and generate independent countermodels
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s research/proof_understanding/tests -p 'test_quantifier_surgery.py' -v
+          python research/proof_understanding/scripts/quantifier_surgery.py --source-root . --seed 10267 --bases 12 --out-dir "${RUNNER_TEMP}/quantifier_surgery_102"
       - name: Build comparison table
         shell: bash
         run: |
@@ -86,4 +94,5 @@ jobs:
             ${{ runner.temp }}/paper_graph_*.json
             ${{ runner.temp }}/understanding_pilot_v0/*.json
             ${{ runner.temp }}/proof_surgery_017/*
+            ${{ runner.temp }}/quantifier_surgery_102/*
           retention-days: 21
