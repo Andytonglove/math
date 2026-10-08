@@ -44,6 +44,29 @@ class PaperClaimGraphTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'Ambiguous'):
                 audit(root,'main.tex')
 
+
+    def test_known_external_font_map_is_explicitly_skipped(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            (root/'main.tex').write_text(r'''\input{glyphtounicode-cmex.tex}
+\begin{document}
+\begin{theorem}\label{thm:main}\end{theorem}
+''')
+            graph=audit(root,'main.tex')
+            self.assertEqual(graph['summary']['skipped_external_preamble_inputs'],1)
+            self.assertEqual(graph['summary']['labels'],1)
+            self.assertEqual(graph['skipped_external_inputs'][0]['reason'],
+                             'known_external_preamble_font_map')
+
+    def test_missing_mathematical_include_is_still_error(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            (root/'main.tex').write_text(r'''\begin{document}
+\input{sections/missing}
+''')
+            with self.assertRaises(FileNotFoundError):
+                audit(root,'main.tex')
+
     def test_cycle_rejected(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp)

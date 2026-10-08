@@ -20,6 +20,9 @@ CONTROL = re.compile(r'\\(?P<kind>begin|end|label|ref|eqref|autoref|cref|Cref|se
 STATEMENTS = {'theorem','lemma','proposition','corollary','definition','claim',
               'conjecture','remark','example','theorem*','lemma*'}
 EQUATIONS = {'equation','equation*','align','align*','gather','gather*','multline','multline*'}
+# Do not ignore missing mathematical source. This known TeX distribution font map
+# may be safely omitted ONLY before the main document starts.
+KNOWN_EXTERNAL_PREAMBLE_INPUTS = {'glyphtounicode-cmex.tex'}
 
 
 def strip_comments(line: str) -> str:
@@ -36,7 +39,7 @@ def strip_comments(line: str) -> str:
     return line
 
 
-def expand_sources(root: Path, main_file: str, max_files: int = 200) -> list[tuple[str,int,str]]:
+def expand_sources(root: Path, main_file: str, max_files: int = 200, skipped_external: list | None = None) -> list[tuple[str,int,str]]:
     """Expand literal input/include commands in order. No arbitrary TeX macro evaluation."""
     root = root.resolve()
     project_root = (root / main_file).resolve().parent
@@ -58,8 +61,11 @@ def expand_sources(root: Path, main_file: str, max_files: int = 200) -> list[tup
             raise FileNotFoundError(f'Missing LaTeX file: {key}')
         loaded.add(key)
         stack.append(key)
+        in_document = key != main_file
         for lineno, raw in enumerate(file.read_text(encoding='utf-8').splitlines(),1):
             line = strip_comments(raw)
+            if r'\begin{document}' in line:
+                in_document = True
             positions=list(INPUT.finditer(line))
             if not positions:
                 result.append((key,lineno,line))
@@ -80,6 +86,11 @@ def expand_sources(root: Path, main_file: str, max_files: int = 200) -> list[tup
                 if len(existing)>1:
                     raise ValueError('Ambiguous LaTeX include: '+name)
                 if not existing:
+                    if not in_document and key == main_file and name in KNOWN_EXTERNAL_PREAMBLE_INPUTS:
+                        if skipped_external is not None:
+                            skipped_external.append({'name':name,'file':key,'line':lineno,'reason':'known_external_preamble_font_map'})
+                        last=item.end()
+                        continue
                     raise FileNotFoundError('Missing LaTeX input: '+name)
                 visit(existing[0].relative_to(root).as_posix())
                 last=item.end()
@@ -139,7 +150,11 @@ def graph_from_lines(lines: list[tuple[str,int,str]]) -> dict:
 
 
 def audit(root: Path, main: str) -> dict:
-    return graph_from_lines(expand_sources(root,main))
+    skipped = []
+    graph = graph_from_lines(expand_sources(root,main,skipped_external=skipped))
+    graph['skipped_external_inputs'] = skipped
+    graph['summary']['skipped_external_preamble_inputs'] = len(skipped)
+    return graph
 
 
 def main():
