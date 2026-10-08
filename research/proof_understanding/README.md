@@ -68,3 +68,8 @@ node --test research/proof_understanding/tests/*.test.mjs
 ~~~
 
 No full Lean compilation or actual model inference has been performed.
+
+
+## LaTeX graph baseline
+
+scripts/tex_reference_audit.mjs extracts **syntactic** label-reference links in case 017 from five source TeX files, and refuses unresolved/duplicate labels. cases/017_graph_diagnostic.md contrasts this with the human-curated mechanism graph. Neither graph has yet been shown to improve any model benchmark score.
