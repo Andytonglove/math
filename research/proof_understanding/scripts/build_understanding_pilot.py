@@ -9,7 +9,7 @@ import json
 from fractions import Fraction
 from pathlib import Path
 
-from parameter_oracle import construct, minimum_pairwise_collisions, InfeasibleParameter
+from parameter_oracle import construct, minimum_pairwise_collisions, collision_scaling_example, InfeasibleParameter
 from understanding_oracles import (
     xor_translation_assignment, exact_unique_game_value,
     enumerate_one_sided_pairs, shift_left, shift_right, example_games
@@ -38,6 +38,7 @@ def build(root: Path) -> dict:
     sat_no,_=xor_translation_assignment(4,2,games["one_edge_perturbed"])
     val_no=exact_unique_game_value(4,2,games["one_edge_perturbed"])
     count,violations=enumerate_one_sided_pairs(4)
+    comparison=collision_scaling_example(8,1)
     try:
         construct(Fraction(2))
         boundary=False
@@ -47,6 +48,7 @@ def build(root: Path) -> dict:
     # the accompanying maths note gives the genuine impossibility proof.
     assert boundary and val_no==Fraction(3,4) and sat_yes and not sat_no
     assert violations==0 and count>0
+    assert comparison['normalized_quadratic_saving']=='1/4' and comparison['normalized_linear_saving']=='1/8'
     assert all(shift_left(shift_right(x))==x for x in range(256))
     assert shift_right(shift_left(1))!=1
     edge_txt=lambda edges: "; ".join(f"({u},{v},shift={s})" for u,v,s in edges)
@@ -65,6 +67,11 @@ def build(root: Path) -> dict:
             "Ten rows may use at most three Taylor-index groups. What is the minimum number of unordered pairs that must share a group?",
             "integer",minimum_pairwise_collisions(10,3),BASE017+"determinant.tex",r"\label{det:collision}",
             "balanced_occupancy_formula","perturbed_mathematical_transfer","The balanced counts 4,3,3 give 12; accessible without the original paper."),
+        entry("017-COLLISION-SCALING","017","number_theory",
+            "In a determinant argument with M rows and degree H, the low-index collision saving changes from exp(-c*sum_a n_a^2) to the weaker exp(-c*sum_a n_a), with sum_a n_a=M. After dividing log|det| by M*H and taking H->infinity, does the weaker saving still provide an H-independent strictly positive margin?",
+            "boolean",False,BASE017+"determinant.tex",r"\label{det:collision}",
+            "quadratic_vs_linear_normalization","proof_mechanism_ablation",
+            "No. The weaker saving contributes only c/H and vanishes. A quadratic saving may persist at positive normalized scale with repeated indices; this does not independently verify the original analytic bound."),
         entry("102-XOR-CONSISTENT","102","complexity_theory",
             "In F_2^2, translation constraints x[v]=x[u] XOR shift on vertices 0..3 are: "+edge_txt(games["consistent"])+". Can all constraints be satisfied simultaneously?",
             "boolean",sat_yes,BASE102+"00-introduction.tex",r"\label{thm:ugc}",
