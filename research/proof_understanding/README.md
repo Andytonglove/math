@@ -98,3 +98,10 @@ The next research gate is a genuinely source-conditioned, mathematically indepen
 - Source code, math oracles and data generators are in the scripts directory. No formal claim of full research-proof understanding follows from these microtasks.
 
 **Empirical result so far:** Qwen2.5-0.5B-Instruct shows no contextual gain on its first four examples per family; all 017 modes give 1/4 after correcting fenced JSON parsing, while 102 outputs are invalid. This is a tiny-model negative smoke test, not a definitive benchmark.
+
+
+### Further development and actual model baselines
+
+- [017 generalized parameter transfer](cases/017_parameter_threshold_transfer.md): independent elementary proof of the rational feasibility threshold nu > r/(r-1), with exact rational constructive witnesses. **Not an extension of the source paper's deep theorem.**
+- [Iteration 05 report](reports/2026-10-08_iteration05_interventions.md): actual 0.5B and 1.5B Qwen CPU results, schema failure analysis, mathematical transfer and CI recovery details.
+- Both open-model runs completed on public GitHub-hosted CPU runners with **no paid inference API**. Tiny baseline results do not establish a benefit of Graph or prove model comprehension.

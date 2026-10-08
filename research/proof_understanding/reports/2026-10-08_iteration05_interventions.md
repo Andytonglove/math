@@ -110,3 +110,60 @@ From repository root:
     python3 research/proof_understanding/scripts/quantifier_surgery.py --source-root . --seed 10267 --bases 12 --out-dir /tmp/quantifier_surgery_102
 
 Inference is provided in the bounded GitHub workflow; use a fixed open model, strict external resource limits and record inference logs before drawing conclusions.
+
+
+## Second actual model run: Qwen2.5-1.5B-Instruct (corrected parser)
+
+[GitHub Actions 37779924784](https://github.com/Andytonglove/math/actions/runs/37779924784) completed SUCCESS with Qwen2.5-1.5B-Instruct on CPU using bfloat16, greedy decode and max_new_tokens=48. Total reported download + inference duration: **105.1 seconds**, 32 paired answers. The uploaded artifact was downloaded and independently inspected.
+
+**Re-graded exact answer content, allowing a single JSON Markdown code fence but not repairing invalid schemas:**
+
+| Family / 4 tasks | Minimal | Proof | Prose | Hypergraph |
+|---|---:|---:|---:|---:|
+| 017 | 1/4 | 1/4 | 1/4 | 1/4 |
+| 102 | 1/4 | 1/4 | 1/4 | 1/4 |
+
+For 017 all **16 replies** predicted ONLY_COLLISION, regardless of the mathematical instance or added context. It is a constant-label failure, not a proof understanding phenomenon. For 102 predictions varied, but the aggregate score still did not improve with context; 2/16 answers were schema-invalid, and all 32 model outputs used Markdown-fenced JSON, hence strict bare-JSON compliance was 0/32.
+
+Token budgets are **not matched**: example average 017 input lengths were minimal 180.5, proof 242.5, prose 230.5, hypergraph 235.5. Family 102: 188.0, 239.0, 244.0, 247.0. Do not claim equal information processing cost, superior efficiency or statistical significance from these data.
+
+The earlier [0.5B run 37779018026](https://github.com/Andytonglove/math/actions/runs/37779018026) similarly gave 1/4 across all 017 conditions after regrading fenced JSON, and 0/4 across 102 conditions because the model generated objects with unexpected list fields instead of a single three-bit string. Importantly, the original bare-JSON parser had overstated formatting errors in the 017 proof conditions; the code and regression tests now distinguish these failure types.
+
+**Observed conclusion:** Neither tiny open model showed a positive proof/graph contextual effect on these eight mathematical examples. This is a **capacity-floor and pilot-quality diagnostic only**. The data do not establish that larger models lack mathematical understanding.
+
+### Model workflow failure and recovery
+
+- 37778928279: workflow parsing rejected an inappropriate job-level runner-context expression; fixed.
+- 37779018026: 0.5B inference succeeded; raw outputs exposed fenced JSON parsing problem.
+- 37779702044 and 37779769155: scorer field-name change caused a test regression; corrected.
+- 37779800191: first 1.5B workflow used old test source and failed before inference.
+- 37779924784: corrected 1.5B model execution and artifact upload succeeded.
+
+No paid API inference was invoked; standard hosted Actions compute was used. The exact inference-artifact ZIPs are available through each run's artifacts (time-limited retention).
+
+## Mathematical transfer beyond bound substitution: generalized exponent barrier
+
+A new fully explicit elementary result was derived from the *shape* of the 017 parameter-feasibility argument:
+
+For integer r>=2 and rational nu, there exist rational 0<theta<A<1 satisfying
+A^r<theta and nu*(A-theta)>1-theta **if and only if** nu>r/(r-1).
+
+This is proven in full in [017_parameter_threshold_transfer.md](../cases/017_parameter_threshold_transfer.md): necessity uses the strict upper bound (A-A^r)/(1-A^r)<(r-1)/r for 0<A<1; sufficiency follows as A approaches 1 and by choosing rational theta in a nonempty open interval. The code supplies an exact rational witness using successive halving.
+
+Concrete outcomes: r=2 threshold 2, r=3 threshold 3/2, r=4 threshold 4/3. The CI executed **33 tasks** for r=2..12 with 11 exactly verified positive witnesses; all 4 dedicated tests passed, including tests at many unseen degrees and 1/1000 beyond threshold.
+
+[Actions 37780393467](https://github.com/Andytonglove/math/actions/runs/37780393467): SUCCESS.
+
+**This does NOT generalize the source paper's geometric interpolation theorem or imply any new result about pi.** It is an independently correct, source-inspired mathematical mechanism transplant and a stronger candidate for evaluation of abstract proof-idea transfer than the earlier raw-number comparisons.
+
+New code:
+- scripts/parameter_threshold_transfer.py
+- tests/test_parameter_threshold_transfer.py
+- cases/017_parameter_threshold_transfer.md
+
+## Updated next scientific gate
+
+1. Evaluate the **generalized parameter-barrier transfer**, not only easy numeric bound comparisons, on a more capable and carefully budgeted model (or a local user-authorized research GPU). Provide the source r=2 proof explanation, then hold out r>2 mathematical tasks.
+2. Use the same source-independent rational oracle for each condition; B0 must have full mathematical task specification and theorem conditions.
+3. Match context tokens or explicitly model them as a covariate, use larger samples and account for six within-base perturbations as clustered observations.
+4. Avoid interpreting the lack of small-model gain as a universal result. The 1.5B run establishes only that the smoke harness executes and identifies a particularly weak baseline.
