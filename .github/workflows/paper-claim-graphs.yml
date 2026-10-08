@@ -12,6 +12,8 @@ on:
       - research/proof_understanding/tests/test_understanding_oracles.py
       - research/proof_understanding/tests/test_build_understanding_pilot.py
       - research/proof_understanding/tests/test_validate_argument_hypergraphs.py
+      - research/proof_understanding/scripts/determinant_surgery.py
+      - research/proof_understanding/tests/test_determinant_surgery.py
       - .github/workflows/paper-claim-graphs.yml
   workflow_dispatch:
 permissions:
@@ -56,6 +58,12 @@ jobs:
           set -euo pipefail
           python -m unittest discover -s research/proof_understanding/tests -p 'test_build_understanding_pilot.py' -v
           python research/proof_understanding/scripts/build_understanding_pilot.py --root . --out-dir "${RUNNER_TEMP}/understanding_pilot_v0"
+      - name: Run proof-surgery exact oracle and strict-boundary tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s research/proof_understanding/tests -p 'test_determinant_surgery.py' -v
+          python research/proof_understanding/scripts/determinant_surgery.py --source-root . --seed 26008 --bases 12 --out-dir "${RUNNER_TEMP}/proof_surgery_017"
       - name: Build comparison table
         shell: bash
         run: |
@@ -77,4 +85,5 @@ jobs:
           path: |
             ${{ runner.temp }}/paper_graph_*.json
             ${{ runner.temp }}/understanding_pilot_v0/*.json
+            ${{ runner.temp }}/proof_surgery_017/*
           retention-days: 21
