@@ -1,0 +1,135 @@
+{
+  "schema_version": "0.1",
+  "case_id": "017",
+  "graph_type": "manually_curated_proof_mechanism_hypothesis",
+  "warning": "Interpretation of a submitted mathematical argument, not formalized minimal dependencies or independent correctness certification.",
+  "nodes": [
+    {
+      "id": "S0",
+      "label": "Assume exceptionally good rational approximations",
+      "kind": "assumption",
+      "source": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/conclusion.tex",
+      "tex_label": "par:good"
+    },
+    {
+      "id": "S1",
+      "label": "Separated-weight interpolation provides surjective jet map",
+      "kind": "construction",
+      "source": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/interpolation.tex",
+      "tex_label": "geom:interpolation"
+    },
+    {
+      "id": "S2",
+      "label": "Nonzero full-row determinant minor",
+      "kind": "witness",
+      "source": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+      "tex_label": "det:matrix"
+    },
+    {
+      "id": "S3",
+      "label": "Arithmetic lower bound via Gaussian integer",
+      "kind": "bound",
+      "source": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+      "tex_label": "det:arithmetic"
+    },
+    {
+      "id": "S4",
+      "label": "Analytic translation into logarithmic-period tests",
+      "kind": "transformation",
+      "source": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+      "tex_label": "det:translation"
+    },
+    {
+      "id": "S5",
+      "label": "Repeated Taylor degrees generate quadratic saving",
+      "kind": "counting_mechanism",
+      "source": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+      "tex_label": "det:collision"
+    },
+    {
+      "id": "S6",
+      "label": "Two-way upper-bound argument",
+      "kind": "proof_by_cases",
+      "source": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+      "tex_label": "det:comparison"
+    },
+    {
+      "id": "S7",
+      "label": "Parameters chosen with strict gap nu>2",
+      "kind": "parameter_selection",
+      "source": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/conclusion.tex",
+      "tex_label": "par:constants"
+    },
+    {
+      "id": "S8",
+      "label": "Contradiction with nonzero determinant lower bound",
+      "kind": "contradiction",
+      "source": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+      "tex_label": "det:contradiction-conditions"
+    },
+    {
+      "id": "S9",
+      "label": "Separate dyadic spacing consequence",
+      "kind": "downstream",
+      "source": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/series.tex",
+      "tex_label": "series:dyadic"
+    }
+  ],
+  "edges": [
+    {
+      "source": "S0",
+      "target": "S7",
+      "relation": "instantiates_forbidden_approximation_exponent"
+    },
+    {
+      "source": "S1",
+      "target": "S2",
+      "relation": "establishes_rank_for"
+    },
+    {
+      "source": "S2",
+      "target": "S3",
+      "relation": "subject_of_lower_bound"
+    },
+    {
+      "source": "S2",
+      "target": "S4",
+      "relation": "row_translation_for_upper_bound"
+    },
+    {
+      "source": "S4",
+      "target": "S5",
+      "relation": "enables_collision_bound"
+    },
+    {
+      "source": "S5",
+      "target": "S6",
+      "relation": "low_index_case"
+    },
+    {
+      "source": "S0",
+      "target": "S6",
+      "relation": "high_index_case"
+    },
+    {
+      "source": "S3",
+      "target": "S8",
+      "relation": "lower_bound_conflicts_with_upper"
+    },
+    {
+      "source": "S6",
+      "target": "S8",
+      "relation": "both_cases_yield_upper_bound"
+    },
+    {
+      "source": "S7",
+      "target": "S8",
+      "relation": "parameters_force_strict_gap"
+    },
+    {
+      "source": "S8",
+      "target": "S9",
+      "relation": "main_claim_supports_downstream_result"
+    }
+  ]
+}

@@ -49,3 +49,22 @@ All test items need source provenance, leakage checks, and a specified verificat
 ## Next gate
 
 Read the actual paper and abridged reasoning summary, follow a mathematically meaningful dependency in 017, construct a **verified withheld transfer task**, and only then run language-model baselines. See `evaluation/PROTOCOL.md`.
+
+
+## Iteration 02 — mathematical mechanism probes
+
+- cases/017_method_audit.md: manuscript-based argument skeleton, sharp parameter feasibility boundary, source-vs-mechanism limitations.
+- data/017_mechanism_graph.json: **manually curated hypothesis graph**, not the Lean proof DAG.
+- scripts/parameter_oracle.py and tests/test_parameter_oracle.py: exact Fraction witnesses and finite collision oracle.
+- evaluation/MECHANISM_TASKS.md: five machine-only probe specifications, not measured scores.
+- reports/2026-10-08_iteration02.md: completed work, local test outcomes, limitations and next gate.
+
+Generate/check, from the repository root:
+
+~~~sh
+python3 research/proof_understanding/scripts/parameter_oracle.py --output research/proof_understanding/data/parameter_witnesses.json
+python3 -m unittest discover -s research/proof_understanding/tests -p 'test_*.py' -v
+node --test research/proof_understanding/tests/*.test.mjs
+~~~
+
+No full Lean compilation or actual model inference has been performed.
