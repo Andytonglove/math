@@ -73,3 +73,15 @@ No full Lean compilation or actual model inference has been performed.
 ## LaTeX graph baseline
 
 scripts/tex_reference_audit.mjs extracts **syntactic** label-reference links in case 017 from five source TeX files, and refuses unresolved/duplicate labels. cases/017_graph_diagnostic.md contrasts this with the human-curated mechanism graph. Neither graph has yet been shown to improve any model benchmark score.
+
+
+## Project focus (Iteration 04)
+
+**Core:** Understanding AI-Generated Mathematical Proofs, not a Graph product.
+
+- [Research charter](CORE_RESEARCH_CHARTER.md): falsifiable hypotheses, machine-only understanding tasks, controls for no-proof baselines, and conditions under which Graph should be rejected.
+- [Iteration 04 report](reports/2026-10-08_iteration04_understanding_focus.md): cross-family data, CI failures/fixes, oracles and scientific limitations.
+- [Candidate argument hypergraphs](data/argument_hypergraphs_v0.json): manually hypothesized, **not** verified semantic graph.
+- [Exact unit oracles](scripts/understanding_oracles.py), [8-task generator](scripts/build_understanding_pilot.py), [strict scorer](scripts/score_understanding_pilot.py): preparatory infrastructure, **no model scores yet**.
+
+The next research gate is a genuinely source-conditioned, mathematically independently checked intervention, not adding more graph nodes.
