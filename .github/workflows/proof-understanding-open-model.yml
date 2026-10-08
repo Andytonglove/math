@@ -1,4 +1,4 @@
-name: Bounded Open-Weight Proof Understanding Smoke Test
+name: Bounded Open-Weight Proof Understanding Smoke Test (1.5B)
 on:
   push:
     branches: [research/proof-understanding-pilot]
@@ -42,13 +42,14 @@ jobs:
           set -euo pipefail
           python research/proof_understanding/scripts/determinant_surgery.py --source-root . --seed 26008 --bases 12 --out-dir "${RUNNER_TEMP}/proof_surgery_017"
           python research/proof_understanding/scripts/quantifier_surgery.py --source-root . --seed 10267 --bases 12 --out-dir "${RUNNER_TEMP}/quantifier_surgery_102"
-      - name: Execute bounded Qwen 0.5B inference on CPU
+      - name: Execute bounded Qwen 1.5B inference on CPU
         shell: bash
         run: |
           set -euo pipefail
           python research/proof_understanding/scripts/smoke_open_model.py \
             --input-root "${RUNNER_TEMP}" \
-            --model Qwen/Qwen2.5-0.5B-Instruct \
+            --model Qwen/Qwen2.5-1.5B-Instruct \
+            --dtype bfloat16 \
             --max-new-tokens 48 --wall-seconds 1000 \
             --output "${RUNNER_TEMP}/open_model_smoke_result.json"
       - name: Report observed paired results
