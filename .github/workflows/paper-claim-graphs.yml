@@ -5,6 +5,13 @@ on:
     paths:
       - research/proof_understanding/scripts/paper_claim_graph.py
       - research/proof_understanding/tests/test_paper_claim_graph.py
+      - research/proof_understanding/scripts/understanding_oracles.py
+      - research/proof_understanding/scripts/build_understanding_pilot.py
+      - research/proof_understanding/scripts/validate_argument_hypergraphs.py
+      - research/proof_understanding/data/argument_hypergraphs_v0.json
+      - research/proof_understanding/tests/test_understanding_oracles.py
+      - research/proof_understanding/tests/test_build_understanding_pilot.py
+      - research/proof_understanding/tests/test_validate_argument_hypergraphs.py
       - .github/workflows/paper-claim-graphs.yml
   workflow_dispatch:
 permissions:
@@ -36,6 +43,11 @@ jobs:
           python "$TOOL" --root . --main "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/main.tex" --output "${RUNNER_TEMP}/paper_graph_017.json"
           python "$TOOL" --root . --main "preprints/The-Unique-Games-Theorem-September-23-2026/build/main.tex" --output "${RUNNER_TEMP}/paper_graph_102.json"
           python "$TOOL" --root . --main "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/paper.tex" --output "${RUNNER_TEMP}/paper_graph_197.json"
+      - name: Validate argument hypergraph provenance and schema
+        shell: bash
+        run: |
+          python -m unittest discover -s research/proof_understanding/tests -p 'test_validate_argument_hypergraphs.py' -v
+          python research/proof_understanding/scripts/validate_argument_hypergraphs.py --root . --input research/proof_understanding/data/argument_hypergraphs_v0.json
       - name: Run cross-domain mathematical oracles
         run: python -m unittest discover -s research/proof_understanding/tests -p 'test_understanding_oracles.py' -v
       - name: Create proof-understanding tasks and isolated gold labels
