@@ -30,9 +30,12 @@ jobs:
             lean/OAI/NumberTheory/PiExponent/Statement.lean
             lean/OAI/NumberTheory/PiExponent/Approximation/InterpolationConsequence.lean
             lean/OAI/NumberTheory/PiExponent/Approximation/AdmissibleMatrixGeometry.lean
+            preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Audit full manuscript LaTeX reference graph
+        run: node research/proof_understanding/scripts/tex_reference_audit.mjs . /tmp/017_tex_graph.json
       - name: Run Node source audit tests
         run: node --test research/proof_understanding/tests/*.test.mjs
       - name: Validate pilot task anchors
