@@ -2,7 +2,7 @@ import unittest
 from pathlib import Path
 import tempfile,json,sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"scripts"))
-from smoke_open_model import strict_json_reply,select,summarize
+from smoke_open_model import strict_json_reply,response_content_and_format,select,summarize
 
 class ModelSmokeTests(unittest.TestCase):
     def test_strict_parser(self):
@@ -11,6 +11,15 @@ class ModelSmokeTests(unittest.TestCase):
         self.assertIsNone(strict_json_reply("The answer is BOTH","017"))
         self.assertIsNone(strict_json_reply('{"branch_status":"invalid"}',"017"))
         self.assertIsNone(strict_json_reply('{"truth_bits":"011","other":1}',"102"))
+
+    def test_content_parsing_distinguishes_fences_from_invalid_schema(self):
+        fence=chr(96)*3
+        raw=fence+'json\n'+'{"branch_status":"ONLY_APPROX"}'+'\n'+fence
+        self.assertEqual(response_content_and_format(raw,"017"),
+                         ("ONLY_APPROX","fenced_json"))
+        malformed=fence+'json\n'+'{"truth_bits":["00","01"],"three_character_string":"STRONG"}'+'\n'+fence
+        self.assertEqual(response_content_and_format(malformed,"102"),
+                         (None,"schema_or_format_invalid"))
 
     def test_paired_condition_selection(self):
         with tempfile.TemporaryDirectory() as temp:

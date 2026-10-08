@@ -49,6 +49,20 @@ def strict_json_reply(text:str,family:str):
     answer=value[key]
     return answer if isinstance(answer,str) and answer in ALLOWED[family] else None
 
+def response_content_and_format(text:str,family:str):
+    """Accept raw JSON or one fenced block; do not repair invalid schemas."""
+    answer=strict_json_reply(text,family)
+    if answer is not None:
+        return answer,"raw_json"
+    matched=re.fullmatch(r"\x60{3}(?:json)?[ \t]*\n(.*?)\n\x60{3}",
+                         text.strip(), flags=re.DOTALL|re.IGNORECASE)
+    if matched:
+        inner=strict_json_reply(matched.group(1),family)
+        if inner is not None:
+            return inner,"fenced_json"
+    return None,"schema_or_format_invalid"
+
+
 def summarize(records):
     grouped=defaultdict(list)
     for r in records:
@@ -57,9 +71,11 @@ def summarize(records):
     for (family,condition),rows in sorted(grouped.items()):
         count=sum(r["correct"] for r in rows)
         valid=sum(r["parsed"] is not None for r in rows)
+        strict=sum(r.get("strict_schema_compliant",False) for r in rows)
         result[f"{family}/{condition}"]={
-            "correct":count,"total":len(rows),"parsed":valid,
-            "accuracy_all":count/len(rows),"valid_json_rate":valid/len(rows),
+            "correct":count,"total":len(rows),"parsed":valid,"strict_schema":strict,
+            "accuracy_all":count/len(rows),"valid_schema_rate_including_fences":valid/len(rows),
+            "strict_schema_rate":strict/len(rows),
             "mean_input_tokens":sum(r["input_tokens"] for r in rows)/len(rows),
             "mean_runtime_seconds":sum(r["runtime_seconds"] for r in rows)/len(rows)
         }
@@ -89,10 +105,12 @@ def run(args):
                                   do_sample=False,pad_token_id=tokenizer.eos_token_id)
         continuation=output[0][tokens["input_ids"].shape[1]:]
         response=tokenizer.decode(continuation,skip_special_tokens=True).strip()
-        parsed=strict_json_reply(response,task["family"])
+        parsed,format_type=response_content_and_format(response,task["family"])
         results.append({
             "family":task["family"],"id":task["id"],"condition":task["condition"],
             "gold":task["gold"],"parsed":parsed,"correct":parsed==task["gold"],
+            "response_format":format_type,
+            "strict_schema_compliant":format_type=="raw_json",
             "raw":response[:500],
             "input_tokens":int(tokens["input_ids"].shape[1]),
             "output_tokens":int(continuation.shape[0]),
