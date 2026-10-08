@@ -7,7 +7,7 @@
 
 1. Expanded modular LaTeX processing across three manuscript families (017, 102, 197). Fixed two real CI failures: resolving TeX includes relative to the project compilation root, and handling an explicitly identified external font-map preamble file without silently ignoring missing mathematical sections. Added regression tests.
 2. Added independent unit oracles in understanding_oracles.py: F2 binary translation-game consistency, small exact game optimum, GF2 cyclic-group ring product enumeration and infinite-dimensional shift identities. They deliberately do not assume the advanced OpenAI theorem is valid.
-3. Built 8 deterministic task cards with source anchor checks, separating prompts and oracle labels. Added strict answer-only scorer with abstention and missing counts. No model inference scores have been collected.
+3. Built 9 deterministic task cards with source anchor checks, separating prompts and oracle labels. Added strict answer-only scorer with abstention and missing counts. No model inference scores have been collected.
 4. Created sourced, manually hypothesized argument hypergraphs: 017 (13 nodes, 6 typed relations), 102 (6 nodes, 1 typed relation), 197 (8 nodes, 3 typed relations). Source anchors are checkable but edge semantics are *not* certified.
 5. Wrote [CORE_RESEARCH_CHARTER.md](../CORE_RESEARCH_CHARTER.md) to define understanding scientifically, compare sources against no-proof baselines, and explicitly permit Graph to fail.
 
@@ -26,7 +26,7 @@ All three had zero unresolved in-paper refs and zero duplicate labels under our 
 - 37774893863: failed — nested LaTeX paths wrongly resolved (fixed).
 - 37775003157: failed — font-map file incorrectly required in repository (fixed).
 - 37775212838: passed — 3 manuscript graphs plus parser regressions.
-- 37775700438: passed — generated the eight toy tasks and oracle checks.
+- 37775700438: passed — generated the nine toy tasks and oracle checks.
 - 37776012144: passed — task generation, mathematical oracles and hypergraph provenance checks.
 - Strict scorer tests were added subsequently; verify their status in a newer CI run before treating them as validated.
 
@@ -46,3 +46,10 @@ Not done: language model baselines, full Lean compilation/Comparator, expert mat
 2. Build at least one independently verified new target per family and compare B0 (no proof) vs B2 (full proof) vs B5 (token-matched mechanism explanation) before any graph-specific claims.
 3. Only if graph-related improvements survive these controls, test B4 typed hypergraphs.
 4. Keep exact artifact provenance, versioned oracles, experiment logs and explicit confidence levels.
+
+
+## Follow-up — mechanism ablation on the 017 proof
+
+Added a new **quadratic-vs-linear collision** intervention. Under the manuscript's M H normalization, a hypothetical only-linear collision saving exp(-c sum n_a) decays at normalized scale c/H -> 0. Under an idealized balanced assignment with M=H^(m+1), D=H^m and half the rows in D low groups, the quadratic sum gives normalized 1/4. This isolates *why the strength of the collision estimate matters for the submitted two-case proof*. It does not verify the full analytic determinant inequality.
+
+Independent exact Fraction oracle and regression test: scripts/parameter_oracle.py and tests/test_parameter_oracle.py. Task ID: 017-COLLISION-SCALING (9 total initial unit probes). Detailed derivation: cases/017_collision_ablation.md. None of these probes should be advertised as a source-conditioned benchmark until controlled model tests are performed.

@@ -39,7 +39,7 @@ B5 source proof plus **token-matched natural-language mechanism explanation**.
 
 Hold the model, budget, task prompts and output format fixed. Do not feed the gold oracle to prompts. Split by paper family to avoid leakage among related manuscripts. Use independent mathematics oracles rather than another LLM judge. Track incorrect, correct, abstained and missing separately, and report inference costs.
 
-**Crucial confound:** all current eight toy interventions may be solvable without reading the original mathematical paper. If B0 is already at ceiling, do not claim to have tested proof understanding; redesign the tasks. Correct structured answers alone also do not validate explanations.
+**Crucial confound:** all current nine toy interventions may be solvable without reading the original mathematical paper. If B0 is already at ceiling, do not claim to have tested proof understanding; redesign the tasks. Correct structured answers alone also do not validate explanations.
 
 ## Falsifiable hypotheses
 
@@ -53,7 +53,7 @@ H3 can be false. If Graph does not help, change or abandon that representation.
 ## Current concrete work
 
 - Families 017, 102, 197 source audits and provenance checks.
-- Eight independent **small mechanism-unit tasks**, prompts and exact gold generated as separate JSON.
+- Nine independent **small mechanism-unit tasks**, prompts and exact gold generated as separate JSON.
 - Small math oracle code: rational feasibility and collisions, F2 translation games, finite group algebra, unilateral shifts.
 - Three *manually authored* typed argument hypergraphs, not extracted semantic truths.
 - CI validates source anchor integrity, toy oracle arithmetic and parser correctness.
