@@ -54,3 +54,22 @@ The full inventory JSON is available as a workflow artifact (14-day retention), 
 ## Next experiment: Lean import closure vs conceptual mechanism
 
 Added an independent syntax-level import closure analyzer for `OAI.NumberTheory.PiExponent.Main`. It reports only modules physically imported under `lean/` and external dependency names; it does **not** infer mathematical proof dependencies or concept graphs. A full-worktree CI task will measure the actual closure, followed by comparisons with source references and curated mechanism edges.
+
+## Verified second cloud execution — import graph baseline
+
+GitHub Actions [run 37773918416](https://github.com/Andytonglove/math/actions/runs/37773918416) completed **SUCCESS** at commit `97bc38942d3c1603fa170763b503b1ad495ddba1`. Downloaded the zipped workflow artifact and independently inspected its two JSON files.
+
+**Actual case 017 syntactic import-closure measurements:**
+
+| Quantity | Measured value |
+|---|---:|
+| Seed | `OAI.NumberTheory.PiExponent.Main` |
+| Seed's direct imports | **2** |
+| Transitive in-repository Lean modules | **869** |
+| In-repository syntactic import edges | **1,707** |
+| Distinct unresolved-to-local-tree / external import identifiers | **215** |
+| Modules with root namespace `OAI` | **869** |
+
+The two seed imports are `AdmissibleMatrixGeometry` and `InterpolationConsequence`, not a complete picture of the mathematics. The import closure excludes external Mathlib package implementation and makes **no claim about true theorem-level dependencies**. The previously constructed LaTeX reference graph (70 labels / 92 references / 27 cross-file references) and the curated mechanism graph (10 manually interpreted nodes) represent very different views of the same claimed proof.
+
+This supports studying **information loss and abstraction across representations**, but does not yet show that any one graph improves comprehension or transfer. No model performance comparison was conducted. Artifact retention is 14 days; key aggregate numbers are preserved in this report.
