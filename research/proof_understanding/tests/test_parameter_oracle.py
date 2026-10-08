@@ -4,7 +4,7 @@ from fractions import Fraction
 from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from parameter_oracle import construct, checks, minimum_pairwise_collisions, InfeasibleParameter
+from parameter_oracle import construct, checks, minimum_pairwise_collisions, collision_scaling_example, InfeasibleParameter
 
 
 class TestParameterOracle(unittest.TestCase):
@@ -29,6 +29,19 @@ class TestParameterOracle(unittest.TestCase):
                             for occupancy in itertools.product(range(n + 1), repeat=bins)
                             if sum(occupancy) == n)
                 self.assertEqual(minimum_pairwise_collisions(n, bins), brute, (n, bins))
+
+
+    def test_quadratic_vs_linear_collision_normalization(self):
+        # With M=H^2, D=H and half the rows assigned to low groups,
+        # balanced occupancies give a fixed 1/4 normalized quadratic
+        # contribution, whereas any linear total-M penalty is 1/H.
+        for H in (4,8,16,32):
+            with self.subTest(H=H):
+                result=collision_scaling_example(H,m=1)
+                self.assertEqual(result["normalized_quadratic_saving"],"1/4")
+                self.assertEqual(result["normalized_linear_saving"],str(Fraction(1,H)))
+        with self.assertRaises(ValueError):
+            collision_scaling_example(3,m=1)
 
     def test_collision_invalid_inputs(self):
         for n, b in [(-1, 1), (0, 0), (2, -1)]:

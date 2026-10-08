@@ -55,6 +55,28 @@ def minimum_pairwise_collisions(n: int, types: int) -> int:
     return r * ((q + 1) * q // 2) + (types - r) * (q * (q - 1) // 2)
 
 
+
+def collision_scaling_example(H: int, m: int = 1) -> dict:
+    """Idealized low-index collision budget, *not* the original determinant theorem.
+
+    Let M=H^(m+1) rows, D=H^m permitted low-index types, with
+    half of rows assigned to low types. Compare exact normalized
+    quadratic vs hypothetical only-linear penalty.
+    """
+    if H <= 0 or H % 2 or m < 1 or m > 5:
+        raise ValueError("H positive even and 1<=m<=5 required")
+    M = H ** (m + 1)
+    D = H ** m
+    n_low = M // 2
+    min_pairs = minimum_pairwise_collisions(n_low,D)
+    low_square_mass = 2 * min_pairs + n_low
+    quadratic = Fraction(low_square_mass, M * H)
+    linear = Fraction(M, M * H)
+    return {"H":H,"dimension":m,"row_count":M,"low_types":D,
+            "low_rows":n_low,
+            "normalized_quadratic_saving":str(quadratic),
+            "normalized_linear_saving":str(linear)}
+
 def score_ratio(w: dict[str, Fraction]) -> dict[str, float]:
     # Diagnostic only. Not the entire proof's quantitative requirements.
     from math import log
