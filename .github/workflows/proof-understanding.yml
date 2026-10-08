@@ -1,0 +1,43 @@
+name: Proof Understanding Pilot Checks
+on:
+  push:
+    branches:
+      - research/proof-understanding-pilot
+    paths:
+      - research/proof_understanding/**
+      - .github/workflows/proof-understanding.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout minimal research sources
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            research/proof_understanding
+            README.md
+            overview.tex
+            lean/docs
+            lean/ComparatorChallenges/PiExponent.json
+            lean/OAI/NumberTheory/PiExponent/Main.lean
+            lean/OAI/NumberTheory/PiExponent/Statement.lean
+            lean/OAI/NumberTheory/PiExponent/Approximation/InterpolationConsequence.lean
+            lean/OAI/NumberTheory/PiExponent/Approximation/AdmissibleMatrixGeometry.lean
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run Node source audit tests
+        run: node --test research/proof_understanding/tests/*.test.mjs
+      - name: Validate pilot task anchors
+        run: node research/proof_understanding/scripts/validate_pilot.mjs .
+      - name: Run exact Python oracle tests
+        run: python3 -m unittest discover -s research/proof_understanding/tests -p 'test_*.py' -v
+      - name: Generate rational witness fixtures
+        run: python3 research/proof_understanding/scripts/parameter_oracle.py --output /tmp/proof-parameter-witnesses.json
