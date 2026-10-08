@@ -1,0 +1,78 @@
+name: Bounded Open-Weight Proof Understanding Smoke Test
+on:
+  push:
+    branches: [research/proof-understanding-pilot]
+    paths:
+      - .github/workflows/proof-understanding-open-model.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  open-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 27
+    env:
+      HF_HOME: ${{ runner.temp }}/huggingface-cache
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+    steps:
+      - name: Checkout limited proof sources and evaluation scripts
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            research/proof_understanding
+            preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex
+            preprints/The-Unique-Games-Theorem-September-23-2026/build/sections/00-introduction.tex
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install open-model CPU dependencies (no paid APIs)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --no-cache-dir "torch==2.6.0" --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --no-cache-dir "transformers==4.49.0" "safetensors>=0.4.5"
+      - name: Unit test smoke test parsing and pairing
+        run: python -m unittest discover -s research/proof_understanding/tests -p 'test_smoke_open_model.py' -v
+      - name: Prepare exact gold and candidate prompts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/proof_understanding/scripts/determinant_surgery.py --source-root . --seed 26008 --bases 12 --out-dir "${RUNNER_TEMP}/proof_surgery_017"
+          python research/proof_understanding/scripts/quantifier_surgery.py --source-root . --seed 10267 --bases 12 --out-dir "${RUNNER_TEMP}/quantifier_surgery_102"
+      - name: Execute bounded Qwen 0.5B inference on CPU
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/proof_understanding/scripts/smoke_open_model.py \
+            --input-root "${RUNNER_TEMP}" \
+            --model Qwen/Qwen2.5-0.5B-Instruct \
+            --max-new-tokens 48 --wall-seconds 1000 \
+            --output "${RUNNER_TEMP}/open_model_smoke_result.json"
+      - name: Report observed paired results
+        shell: bash
+        run: |
+          python - <<'PYCODE' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          p=os.path.join(os.environ["RUNNER_TEMP"],"open_model_smoke_result.json")
+          with open(p,encoding="utf-8") as f:d=json.load(f)
+          print("## Open-weight CPU smoke test, NOT proof understanding validation")
+          print("Model: "+d["model"])
+          print(f"Completed **{d['completed']}** / **{d['inputs']}** inputs")
+          print(f"Elapsed (includes download): **{d['model_download_and_inference_seconds']} seconds**")
+          print("| Family/condition | Exact answers correct | Valid JSON | Mean input tokens |")
+          print("|---|---:|---:|---:|")
+          for key, row in d["summary"].items():
+              print(f"| {key} | {row['correct']}/{row['total']} | {row['parsed']}/{row['total']} | {row['mean_input_tokens']:.0f} |")
+          print("Small, paired smoke sample only; no statistical significance or causal claim.")
+          PYCODE
+      - name: Save inference outputs and failure diagnostics if available
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: open-model-proof-understanding-${{ github.run_id }}
+          path: ${{ runner.temp }}/open_model_smoke_result.json
+          if-no-files-found: warn
+          retention-days: 14
