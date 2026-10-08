@@ -51,6 +51,12 @@ jobs:
           python3 research/proof_understanding/scripts/workspace_audit.py \
             --root . --output "${{ runner.temp }}/full_math_workspace_inventory.json"
 
+      - name: Audit syntactic Lean import closure for case 017
+        run: |
+          python3 research/proof_understanding/scripts/lean_import_audit.py \
+            --root . --module OAI.NumberTheory.PiExponent.Main \
+            --output "${{ runner.temp }}/case017_lean_import_closure.json"
+
       - name: Run workspace inventory fixture tests
         run: python3 -m unittest discover -s research/proof_understanding/tests -p 'test_workspace_audit.py' -v
 
@@ -73,5 +79,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: math-full-workspace-inventory-${{ github.run_id }}
-          path: ${{ runner.temp }}/full_math_workspace_inventory.json
+          path: |
+            ${{ runner.temp }}/full_math_workspace_inventory.json
+            ${{ runner.temp }}/case017_lean_import_closure.json
           retention-days: 14

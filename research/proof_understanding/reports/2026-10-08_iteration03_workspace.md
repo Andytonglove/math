@@ -26,3 +26,31 @@ A direct clone into the current assistant container was attempted but DNS access
 ## Next research gate
 
 Once full checkout passes: examine selected source families and create new independently verified held-out mathematical interventions and baselines. Continue keeping original mathematical source files and main unchanged.
+
+## Verified execution update — full source checkout
+
+GitHub Actions run [37773543681](https://github.com/Andytonglove/math/actions/runs/37773543681) completed **SUCCESS** at commit fb4f55b36560676c1d0c6825d1f8500dda0e2781. It checked out the complete Git history and full worktree (no sparse checkout) and uploaded an inventory artifact.
+
+The actual artifact, independently opened after the job, records:
+
+| Metric | Value |
+|---|---:|
+| Tracked worktree entries | **133,982** |
+| Missing tracked paths | **0** |
+| Worktree bytes (tracked) | **2,214,553,648** |
+| Lean files (.lean) | **122,876** |
+| LaTeX files (.tex) | **8,009** |
+| PDF files (.pdf) | **787** |
+| Entries under lean/ | **123,565** |
+| Entries under preprints/ | **10,373** |
+| lean/ tracked bytes | **1,584,025,482** |
+| preprints/ tracked bytes | **627,365,628** |
+| Git checkout | **not sparse, not shallow** |
+
+This is the first verified full-source-scale audit. It indicates that scanning all Lean source modules is a large task. Subsequent structural work should first traverse **case-specific import closures**, with explicit awareness that imported Mathlib packages lie outside the repository's `lean/` source tree.
+
+The full inventory JSON is available as a workflow artifact (14-day retention), not as a permanently committed raw file. These counts correspond to the pinned commit above, not to future upstream updates.
+
+## Next experiment: Lean import closure vs conceptual mechanism
+
+Added an independent syntax-level import closure analyzer for `OAI.NumberTheory.PiExponent.Main`. It reports only modules physically imported under `lean/` and external dependency names; it does **not** infer mathematical proof dependencies or concept graphs. A full-worktree CI task will measure the actual closure, followed by comparisons with source references and curated mechanism edges.
