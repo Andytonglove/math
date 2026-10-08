@@ -1,0 +1,101 @@
+[
+  {
+    "id": "017-SCOPE-01",
+    "category": "claim_scope",
+    "status": "source_grounded",
+    "oracle_label": "not_entailed",
+    "question": "Does the selected Lean theorem establish the stronger eventual bound |pi - p/q| >= q^(-2) for all integers p and sufficiently large q?",
+    "evidence": [
+      {
+        "file": "lean/docs/017.md",
+        "anchor": "For every $\\nu>2$"
+      },
+      {
+        "file": "lean/OAI/NumberTheory/PiExponent/Main.lean",
+        "anchor": "2 < ν → ∃ Q : ℤ"
+      }
+    ],
+    "gold_reason": "The selected statement quantifies over ν strictly greater than 2; it does not establish the boundary exponent ν=2. Do not claim the stronger statement is false.",
+    "eval_note": "Tests logical scope discrimination; not independent proof understanding."
+  },
+  {
+    "id": "017-SCOPE-02",
+    "category": "formalization_scope",
+    "status": "source_grounded",
+    "oracle_label": "not_selected",
+    "question": "Is convergence of the Flint-Hills series among the named selected comparator theorem OAI.PiExponent.main?",
+    "evidence": [
+      {
+        "file": "lean/docs/017.md",
+        "anchor": "outside this selected statement"
+      },
+      {
+        "file": "lean/ComparatorChallenges/PiExponent.json",
+        "anchor": "\"OAI.PiExponent.main\""
+      },
+      {
+        "file": "lean/OAI/NumberTheory/PiExponent/Main.lean",
+        "anchor": "theorem flint_hills_summable"
+      }
+    ],
+    "gold_reason": "The scope note excludes this consequence from the selected comparator statement, although a separate Flint-Hills summability theorem appears in Main.lean. 'Not selected' is not 'not present anywhere in Lean'.",
+    "eval_note": "Tests granularity: paper claim vs selected comparator theorem vs additional Lean theorem."
+  },
+  {
+    "id": "017-SPINE-01",
+    "category": "local_dependency",
+    "status": "source_grounded",
+    "oracle_label": "both_required_by_this_source_proof",
+    "question": "Which two named result constants are used directly in OAI.PiExponent.main's displayed proof?",
+    "evidence": [
+      {
+        "file": "lean/OAI/NumberTheory/PiExponent/Main.lean",
+        "anchor": "refine ⟨pi_integer_eventual_lower_bound, ?_⟩"
+      },
+      {
+        "file": "lean/OAI/NumberTheory/PiExponent/Main.lean",
+        "anchor": "exact pi_irrationalityExponent_eq_two"
+      }
+    ],
+    "gold_reason": "The local proof cites pi_integer_eventual_lower_bound and pi_irrationalityExponent_eq_two. This is about this implementation, not mathematical necessity.",
+    "eval_note": "Easy source lookup control; should NOT be advertised as conceptual transfer."
+  },
+  {
+    "id": "017-BRIDGE-01",
+    "category": "local_dependency",
+    "status": "source_grounded",
+    "oracle_label": "formal_bottleneck_identified",
+    "question": "Following only the inspected Lean source-level proof spine, name the global interpolation result invoked before the eventual rational-approximation bound, and name the analytic ingredient consumed by the bridge theorem.",
+    "evidence": [
+      {
+        "file": "lean/OAI/NumberTheory/PiExponent/Main.lean",
+        "anchor": "AdmissibleMatrixInterpolation.globalInterpolation"
+      },
+      {
+        "file": "lean/OAI/NumberTheory/PiExponent/Approximation/InterpolationConsequence.lean",
+        "anchor": "LiteralAnalytic.analyticAggregate"
+      }
+    ],
+    "gold_reason": "The source invokes AdmissibleMatrixInterpolation.globalInterpolation and uses LiteralAnalytic.analyticAggregate in piEventualLowerBound_of_globalInterpolation. Naming these does NOT amount to understanding the analytic or geometric proofs.",
+    "eval_note": "Source dependency retrieval task; precursor to deeper hidden-mechanism analysis."
+  },
+  {
+    "id": "017-TRANSFER-01",
+    "category": "mathematical_transfer",
+    "status": "oracle_pending",
+    "oracle_label": null,
+    "question": "Using the ideas of the irrationality exponent result, prove or refute that the irrationality exponent of (2*pi + 1) is 2. Give a full argument rather than quoting the target result.",
+    "evidence": [
+      {
+        "file": "lean/OAI/NumberTheory/PiExponent/Statement.lean",
+        "anchor": "noncomputable def irrationalityExponent"
+      },
+      {
+        "file": "lean/OAI/NumberTheory/PiExponent/Main.lean",
+        "anchor": "pi_irrationalityExponent_eq_two"
+      }
+    ],
+    "gold_reason": null,
+    "eval_note": "Candidate transfer only. Needs independent proof/Lean oracle and leakage control before any benchmark scoring."
+  }
+]

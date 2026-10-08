@@ -8,36 +8,44 @@ Can a model extract, manipulate, and transfer mathematical information from an u
 
 **Not** a theorem-proving benchmark yet; **not** evidence of human comprehension. No human experiment is required for the first phase.
 
-## Implemented in the first commit
+## Implemented
 
 - `scripts/catalog_audit.mjs`: dependency-free Node catalogue parser for `overview.tex`, README reasoning summary links, and presence of Lean scope notes.
 - `data/catalog_index.json`: frozen family-level inventory at upstream/fork commit `fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb`.
-- `tests/catalog_audit.test.mjs`: tests for TeX nested braces, summary metadata, and basic source invariants.
+- `tests/catalog_audit.test.mjs`: tests for TeX nested braces, summary metadata, and source invariants.
+- `cases/017_pi_exponent.md`: concrete first case comparing comparator scope, visible Lean source, and mathematical boundaries.
+- `data/case017_proof_spine.json`: manually grounded, deliberately incomplete local proof-invocation spine.
+- `evaluation/pilot_tasks.json`: five candidate tasks; four **source-grounded controls** and one **transfer oracle pending**.
+- `scripts/validate_pilot.mjs`: source anchor validation, not mathematical correctness testing.
 
-Regenerate from the repository root:
+Regenerate/check from the repository root:
 
     node research/proof_understanding/scripts/catalog_audit.mjs . research/proof_understanding/data/catalog_index.json fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
-    node --test research/proof_understanding/tests/catalog_audit.test.mjs
+    node --test research/proof_understanding/tests/*.test.mjs
+    node research/proof_understanding/scripts/validate_pilot.mjs .
 
 ## Important labels
 
 - `lean_scope_doc`: existence of a scope **description**, not an independent Lean compilation or validation.
-- `reasoning_summary`: an abridged public write-up, not a verified internal chain of thought.
+- `reasoning_summary`: an abridged public write-up, not a verified internal discovery trace.
 - `manuscripts`: source links, not truth labels. Use the actual manuscript and scope notes before drawing conclusions.
+- The selected comparator theorem is narrower than all possible claims in a paper. A `sorry` in ComparatorChallenges is a challenge target, not itself a proof gap.
 
-## Proposed evaluation tracks (not yet benchmark scores)
+## Evaluation tracks (NOT results)
 
 1. **Claim & scope grounding:** distinguish the theorem actually formalized from stronger or different claims.
-2. **Proof structure:** identify what imported formal ingredients are invoked; avoid equating file imports with full proof dependence.
-3. **Counterfactual mathematics:** perturb assumptions; require a checked proof, a checked counterexample, or an explicit unknown judgment.
+2. **Proof structure:** trace source-level ingredients, with explicit distinction between import graph and mathematical necessity.
+3. **Counterfactual mathematics:** perturb assumptions; require checked proof, checked counterexample, or principled abstention.
 4. **Transfer:** solve a withheld, genuinely new related problem with a separately checked oracle.
 
-All future test items need source provenance, leakage checks, and a clear verification level. Baselines should include paper-only, paper+Lean, paper+summary, and structural representation **without assuming any graph is better**.
+All test items need source provenance, leakage checks, and a specified verification level. Baselines should include paper-only, paper+Lean, paper+summary, and structure-aware representations **without assuming graph helps**.
 
 ## Pilot selection
 
-- **017:** irrationality exponent of pi. Strong initial source-level case: main formal theorem, Lean scope note, and abridged reasoning summary.
-- **102:** Unique Games and reductions; useful later for graph/CS-rich structure.
-- **197:** Kaplansky direct-finiteness counterexamples; useful for disproof versus proof.
+- **017 (active case):** π irrationality exponent; has source, Lean notes and reasoning summary PDF. Current audit explicitly has NOT examined PDF reasoning details.
+- **102 (queue):** Unique Games and reductions, a later graph/CS-rich case.
+- **197 (queue):** Kaplansky-related counterexamples; useful for disproof versus proof.
 
-Start with 017. Do not claim to understand the mathematical novelty before reading its manuscript, reasoning summary and dependencies and obtaining appropriate mathematical review.
+## Next gate
+
+Read the actual paper and abridged reasoning summary, follow a mathematically meaningful dependency in 017, construct a **verified withheld transfer task**, and only then run language-model baselines. See `evaluation/PROTOCOL.md`.

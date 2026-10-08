@@ -1,0 +1,100 @@
+{
+  "family_id": "017",
+  "graph_kind": "curated_local_source_dependency_spine",
+  "coverage": "Selected Lean main theorem and two immediately supporting modules only; NOT complete proof dependency graph or verified conceptual graph.",
+  "verification": "Checked against linked Lean source text; no Lean compilation, comparator run, or mathematics referee review in this pilot.",
+  "nodes": [
+    {
+      "id": "OAI.PiExponent.main",
+      "kind": "selected_comparator_target",
+      "file": "lean/OAI/NumberTheory/PiExponent/Main.lean"
+    },
+    {
+      "id": "OAI.PiExponent.pi_integer_eventual_lower_bound",
+      "kind": "theorem",
+      "file": "lean/OAI/NumberTheory/PiExponent/Main.lean"
+    },
+    {
+      "id": "OAI.PiExponent.pi_irrationalityExponent_eq_two",
+      "kind": "theorem",
+      "file": "lean/OAI/NumberTheory/PiExponent/Main.lean"
+    },
+    {
+      "id": "OAI.PiExponent.pi_eventual_lower_bound",
+      "kind": "theorem",
+      "file": "lean/OAI/NumberTheory/PiExponent/Main.lean"
+    },
+    {
+      "id": "OAI.PiExponent.piEventualLowerBound_of_globalInterpolation",
+      "kind": "theorem",
+      "file": "lean/OAI/NumberTheory/PiExponent/Approximation/InterpolationConsequence.lean"
+    },
+    {
+      "id": "OAI.PiExponent.AdmissibleMatrixInterpolation.globalInterpolation",
+      "kind": "theorem",
+      "file": "lean/OAI/NumberTheory/PiExponent/Approximation/AdmissibleMatrixGeometry.lean"
+    },
+    {
+      "id": "OAI.PiExponent.LiteralAnalytic.analyticAggregate",
+      "kind": "imported_result",
+      "file": "lean/OAI/NumberTheory/PiExponent/Approximation/InterpolationConsequence.lean"
+    },
+    {
+      "id": "OAI.PiExponent.AdmissibleJetSurjectivity.eventually_jetRestriction_surjective",
+      "kind": "imported_result",
+      "file": "lean/OAI/NumberTheory/PiExponent/Approximation/AdmissibleMatrixGeometry.lean"
+    },
+    {
+      "id": "OAI.PiExponent.flint_hills_summable",
+      "kind": "separate_theorem_outside_selected_comparator",
+      "file": "lean/OAI/NumberTheory/PiExponent/Main.lean"
+    }
+  ],
+  "edges": [
+    {
+      "consumer": "OAI.PiExponent.main",
+      "provider": "OAI.PiExponent.pi_integer_eventual_lower_bound",
+      "relation": "visible_source_dependency"
+    },
+    {
+      "consumer": "OAI.PiExponent.main",
+      "provider": "OAI.PiExponent.pi_irrationalityExponent_eq_two",
+      "relation": "visible_source_dependency"
+    },
+    {
+      "consumer": "OAI.PiExponent.pi_integer_eventual_lower_bound",
+      "provider": "OAI.PiExponent.pi_eventual_lower_bound",
+      "relation": "visible_source_dependency"
+    },
+    {
+      "consumer": "OAI.PiExponent.pi_irrationalityExponent_eq_two",
+      "provider": "OAI.PiExponent.pi_eventual_lower_bound",
+      "relation": "visible_source_dependency"
+    },
+    {
+      "consumer": "OAI.PiExponent.pi_eventual_lower_bound",
+      "provider": "OAI.PiExponent.piEventualLowerBound_of_globalInterpolation",
+      "relation": "visible_source_dependency"
+    },
+    {
+      "consumer": "OAI.PiExponent.pi_eventual_lower_bound",
+      "provider": "OAI.PiExponent.AdmissibleMatrixInterpolation.globalInterpolation",
+      "relation": "visible_source_dependency"
+    },
+    {
+      "consumer": "OAI.PiExponent.piEventualLowerBound_of_globalInterpolation",
+      "provider": "OAI.PiExponent.LiteralAnalytic.analyticAggregate",
+      "relation": "visible_source_dependency"
+    },
+    {
+      "consumer": "OAI.PiExponent.AdmissibleMatrixInterpolation.globalInterpolation",
+      "provider": "OAI.PiExponent.AdmissibleJetSurjectivity.eventually_jetRestriction_surjective",
+      "relation": "visible_source_dependency"
+    },
+    {
+      "consumer": "OAI.PiExponent.flint_hills_summable",
+      "provider": "OAI.PiExponent.pi_eventual_lower_bound",
+      "relation": "visible_source_dependency"
+    }
+  ]
+}
