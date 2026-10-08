@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 27
     env:
-      HF_HOME: ${{ runner.temp }}/huggingface-cache
+      HF_HOME: /tmp/open-math-huggingface-cache
       HF_HUB_DISABLE_TELEMETRY: "1"
       PIP_DISABLE_PIP_VERSION_CHECK: "1"
     steps:
