@@ -6,7 +6,7 @@ import {validateTasks} from "../scripts/validate_pilot.mjs";
 test("task evidence anchors are present in forked source",()=>{
   const root=resolve(".");
   const filename=join(root,"research/proof_understanding/evaluation/pilot_tasks.json");
-  if(!existsSync(filename))return;
+  assert.ok(existsSync(filename),"Run from repo root with the pilot tasks checked out");
   const items=JSON.parse(readFileSync(filename,"utf8"));
   const result=validateTasks(root,items);
   assert.deepEqual(result.errors,[]);

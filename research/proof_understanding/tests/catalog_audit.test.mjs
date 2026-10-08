@@ -16,7 +16,7 @@ test("abridged reasoning summary inventory",()=>{
 });
 test("live catalogue has unique family IDs and resolvable manuscript references",()=>{
   const root=resolve(".");
-  if(!existsSync(join(root,"overview.tex")))return;
+  assert.ok(existsSync(join(root,"overview.tex")),"Run from repo root with the sources checked out");
   const rows=readFamilies(readFileSync(join(root,"overview.tex"),"utf8"));
   const traces=readTraces(readFileSync(join(root,"README.md"),"utf8"));
   const scopes=new Set(rows.filter(f=>existsSync(join(root,"lean/docs",f.id+".md"))).map(f=>f.id));
