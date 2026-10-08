@@ -47,7 +47,8 @@ class ModelSmokeTests(unittest.TestCase):
               "parsed":None,"input_tokens":200,"runtime_seconds":4}]
         s=summarize(rows)["017/minimal"]
         self.assertEqual(s["accuracy_all"],.5)
-        self.assertEqual(s["valid_json_rate"],.5)
+        self.assertEqual(s["valid_schema_rate_including_fences"],.5)
         self.assertEqual(s["mean_input_tokens"],150)
+        self.assertEqual(s["strict_schema_rate"],0.0)
 
 if __name__=="__main__":unittest.main()
