@@ -36,6 +36,14 @@ jobs:
           python "$TOOL" --root . --main "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/main.tex" --output "${RUNNER_TEMP}/paper_graph_017.json"
           python "$TOOL" --root . --main "preprints/The-Unique-Games-Theorem-September-23-2026/build/main.tex" --output "${RUNNER_TEMP}/paper_graph_102.json"
           python "$TOOL" --root . --main "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/paper.tex" --output "${RUNNER_TEMP}/paper_graph_197.json"
+      - name: Run cross-domain mathematical oracles
+        run: python -m unittest discover -s research/proof_understanding/tests -p 'test_understanding_oracles.py' -v
+      - name: Create proof-understanding tasks and isolated gold labels
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s research/proof_understanding/tests -p 'test_build_understanding_pilot.py' -v
+          python research/proof_understanding/scripts/build_understanding_pilot.py --root . --out-dir "${RUNNER_TEMP}/understanding_pilot_v0"
       - name: Build comparison table
         shell: bash
         run: |
@@ -54,5 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: paper-claim-graphs-${{ github.run_id }}
-          path: ${{ runner.temp }}/paper_graph_*.json
+          path: |
+            ${{ runner.temp }}/paper_graph_*.json
+            ${{ runner.temp }}/understanding_pilot_v0/*.json
           retention-days: 21
