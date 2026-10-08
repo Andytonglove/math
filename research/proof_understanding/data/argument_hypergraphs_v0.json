@@ -129,6 +129,16 @@
             "anchor": "\\label{series:dyadic}"
           },
           "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.dyadic",
+          "statement": "The dyadic spacing lemma controls small sine denominators under an irrationality lower bound",
+          "role": "consequence",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/series.tex",
+            "anchor": "\\label{series:dyadic}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
         }
       ],
       "edges": [
@@ -189,12 +199,13 @@
         },
         {
           "id": "17.e6",
-          "kind": "implies",
+          "kind": "all_of",
           "premises": [
-            "17.outcome"
+            "17.outcome",
+            "17.dyadic"
           ],
           "conclusion": "17.series",
-          "meaning": "Additional dyadic lemma and grouping are required; omitted here",
+          "meaning": "Sine-series convergence relies on the additional spacing lemma, not just a bare output theorem",
           "semantic_review": "pending"
         }
       ]
@@ -358,6 +369,16 @@
             "anchor": "\\label{sec:cellular}"
           },
           "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "197.group_must_be_infinite",
+          "statement": "Any counterexample group must be infinite, by direct finiteness for finite-dimensional finite-group algebras",
+          "role": "restriction",
+          "source": {
+            "file": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/01-introduction.tex",
+            "anchor": "For a finite group $G$"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
         }
       ],
       "edges": [
@@ -391,8 +412,8 @@
             "197.obstruction",
             "197.counterexample"
           ],
-          "conclusion": "197.counterexample",
-          "meaning": "Counterexample group cannot be finite; structural restriction, not the paper's proof",
+          "conclusion": "197.group_must_be_infinite",
+          "meaning": "Finite-group direct finiteness forces the constructed counterexample group to be infinite",
           "semantic_review": "pending"
         }
       ]
