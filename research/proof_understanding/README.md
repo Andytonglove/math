@@ -87,3 +87,14 @@ scripts/tex_reference_audit.mjs extracts **syntactic** label-reference links in 
 The next research gate is a genuinely source-conditioned, mathematically independently checked intervention, not adding more graph nodes.
 
 - [017 collision-strength ablation](cases/017_collision_ablation.md): executable mechanism counterfactual; not full proof certification.
+
+
+## Iteration 05 — Interventional proof understanding
+
+- [Iteration 05 research report](reports/2026-10-08_iteration05_interventions.md): two exact algebraic/logic surgery families, real 0.5B model results, failures, costs and limitations.
+- [Determinant surgery](evaluation/DETERMINANT_SURGERY.md): six interventions from the 017 two-case limiting bound, 72 tasks and 7 information conditions.
+- [Quantifier surgery](evaluation/QUANTIFIER_SURGERY.md): 102 statement-scope quantifier countermodels, 48 tasks and 7 conditions.
+- [Open model smoke runner](scripts/smoke_open_model.py): bounded open-weight CPU baseline, prompt pairing, strict vs fenced JSON scoring, no paid API.
+- Source code, math oracles and data generators are in the scripts directory. No formal claim of full research-proof understanding follows from these microtasks.
+
+**Empirical result so far:** Qwen2.5-0.5B-Instruct shows no contextual gain on its first four examples per family; all 017 modes give 1/4 after correcting fenced JSON parsing, while 102 outputs are invalid. This is a tiny-model negative smoke test, not a definitive benchmark.
