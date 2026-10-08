@@ -34,7 +34,7 @@ jobs:
           set -euo pipefail
           python -m pip install --no-cache-dir "torch==2.6.0" --index-url https://download.pytorch.org/whl/cpu
           python -m pip install --no-cache-dir "transformers==4.49.0" "safetensors>=0.4.5"
-      - name: Unit test smoke test parsing and pairing
+      - name: Test corrected strict and fenced JSON parsing plus pairing
         run: python -m unittest discover -s research/proof_understanding/tests -p 'test_smoke_open_model.py' -v
       - name: Prepare exact gold and candidate prompts
         shell: bash
