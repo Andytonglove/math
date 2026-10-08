@@ -36,6 +36,8 @@ jobs:
           node-version: '22'
       - name: Audit full manuscript LaTeX reference graph
         run: node research/proof_understanding/scripts/tex_reference_audit.mjs . /tmp/017_tex_graph.json
+      - name: Validate manually curated mechanism graph provenance
+        run: node research/proof_understanding/scripts/validate_mechanism_graph.mjs .
       - name: Run Node source audit tests
         run: node --test research/proof_understanding/tests/*.test.mjs
       - name: Validate pilot task anchors
