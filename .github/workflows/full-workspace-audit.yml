@@ -1,0 +1,77 @@
+name: Complete Mathematical Repository Checkout Audit
+on:
+  push:
+    branches:
+      - research/proof-understanding-pilot
+    paths:
+      - .github/workflows/full-workspace-audit.yml
+      - research/proof_understanding/scripts/workspace_audit.py
+      - research/proof_understanding/tests/test_workspace_audit.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: full-math-workspace-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  full-checkout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout complete repository (no sparse paths, complete Git history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          lfs: false
+          submodules: false
+
+      - name: Verify repository is fully checked out
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse --is-shallow-repository)" = "false"
+          test "$(git config --bool core.sparseCheckout || echo false)" != "true"
+          echo "Commit: $(git rev-parse HEAD)"
+          echo "Tracked entries: $(git ls-files | wc -l)"
+          echo "Repository top directories:"
+          du -sh .git lean preprints reasoning_traces || true
+          df -h .
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Create full-worktree inventory
+        run: |
+          python3 research/proof_understanding/scripts/workspace_audit.py \
+            --root . --output "${{ runner.temp }}/full_math_workspace_inventory.json"
+
+      - name: Run workspace inventory fixture tests
+        run: python3 -m unittest discover -s research/proof_understanding/tests -p 'test_workspace_audit.py' -v
+
+      - name: Record summary in Actions page
+        shell: bash
+        run: |
+          python3 - <<'PYCODE' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          with open(os.environ["RUNNER_TEMP"]+"/full_math_workspace_inventory.json") as f:
+              d=json.load(f)
+          print("## Full repository checkout")
+          print(f"Commit: `{d['git_commit']}`  ")
+          print(f"Tracked files: **{d['tracked_files']:,}**  ")
+          print(f"Tracked worktree bytes: **{d['total_tracked_worktree_bytes']:,}**  ")
+          print(f"Shallow: **{d['git_is_shallow']}** | Sparse: **{d['git_is_sparse']}**  ")
+          print("This is an infrastructure audit, not a verification of mathematical truth.")
+          PYCODE
+
+      - name: Persist workspace audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: math-full-workspace-inventory-${{ github.run_id }}
+          path: ${{ runner.temp }}/full_math_workspace_inventory.json
+          retention-days: 14
