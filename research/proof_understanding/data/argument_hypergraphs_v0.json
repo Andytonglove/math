@@ -1,0 +1,401 @@
+{
+  "version": "0.1.0",
+  "project": "Understanding AI-Generated Mathematical Proofs",
+  "representation": "candidate_typed_argument_hypergraph",
+  "disclaimer": "A manually constructed study aid. The edge roles are hypothetical accounts of the manuscript argument and are NOT certified logical entailments or proof-checker output.",
+  "family_graphs": [
+    {
+      "family": "017",
+      "subject": "irrationality exponent of pi",
+      "source_status": "unreviewed mathematical research claim",
+      "quantifier_scope": "for every real nu > 2, exists Q depending on nu, for all integer p and q >= Q, the rational approximation lower bound holds",
+      "nodes": [
+        {
+          "id": "17.good",
+          "statement": "Assume arbitrarily many better-than-q^-nu approximations",
+          "role": "assumption",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/conclusion.tex",
+            "anchor": "\\label{par:good}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.interp",
+          "statement": "Separated-weight jet interpolation map is surjective",
+          "role": "construction",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/interpolation.tex",
+            "anchor": "\\label{geom:interpolation}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.minor",
+          "statement": "Choose a nonzero full-row-rank minor",
+          "role": "witness",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+            "anchor": "\\label{det:matrix}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.lower",
+          "statement": "Nonzero Gaussian-integer determinant yields arithmetic lower bound",
+          "role": "bound",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+            "anchor": "\\label{det:arithmetic}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.translation",
+          "statement": "Translate determinant rows into analytic functions",
+          "role": "transformation",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+            "anchor": "\\label{det:translation}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.lowcase",
+          "statement": "Low Taylor-index multiplicities yield collision saving",
+          "role": "case",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+            "anchor": "\\label{det:collision}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.highcase",
+          "statement": "Otherwise high Taylor-index weights yield approximation-error saving",
+          "role": "case",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+            "anchor": "\\label{det:comparison}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.upper",
+          "statement": "Both mutually exhaustive alternatives give a sufficiently strong analytic upper bound",
+          "role": "bound",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+            "anchor": "\\label{det:upper}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.params",
+          "statement": "Select parameters with positive strict separation at nu>2",
+          "role": "parameter",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/conclusion.tex",
+            "anchor": "\\label{par:constants}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.contra",
+          "statement": "Determinant upper and lower bounds conflict",
+          "role": "contradiction",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/determinant.tex",
+            "anchor": "\\label{det:contradiction-conditions}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.outcome",
+          "statement": "Eliminate arbitrarily good approximations",
+          "role": "conclusion",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/conclusion.tex",
+            "anchor": "\\label{par:good}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "17.series",
+          "statement": "Independent dyadic argument yields sine-series consequences",
+          "role": "consequence",
+          "source": {
+            "file": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/series.tex",
+            "anchor": "\\label{series:dyadic}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        }
+      ],
+      "edges": [
+        {
+          "id": "17.e1",
+          "kind": "implies",
+          "premises": [
+            "17.interp"
+          ],
+          "conclusion": "17.minor",
+          "meaning": "Source claims interpolation enables a nonzero minor",
+          "semantic_review": "pending"
+        },
+        {
+          "id": "17.e2",
+          "kind": "implies",
+          "premises": [
+            "17.minor"
+          ],
+          "conclusion": "17.lower",
+          "meaning": "The nonzero minor is the object bounded from below",
+          "semantic_review": "pending"
+        },
+        {
+          "id": "17.e3",
+          "kind": "all_of",
+          "premises": [
+            "17.translation",
+            "17.lowcase",
+            "17.highcase"
+          ],
+          "conclusion": "17.upper",
+          "meaning": "Both branches of a proof-by-cases must be handled",
+          "semantic_review": "pending"
+        },
+        {
+          "id": "17.e4",
+          "kind": "contradicts",
+          "premises": [
+            "17.lower",
+            "17.upper",
+            "17.params"
+          ],
+          "conclusion": "17.contra",
+          "meaning": "Strict bounds cannot hold simultaneously",
+          "semantic_review": "pending"
+        },
+        {
+          "id": "17.e5",
+          "kind": "implies",
+          "premises": [
+            "17.good",
+            "17.contra"
+          ],
+          "conclusion": "17.outcome",
+          "meaning": "Contradiction discharges the assumption",
+          "semantic_review": "pending"
+        },
+        {
+          "id": "17.e6",
+          "kind": "implies",
+          "premises": [
+            "17.outcome"
+          ],
+          "conclusion": "17.series",
+          "meaning": "Additional dyadic lemma and grouping are required; omitted here",
+          "semantic_review": "pending"
+        }
+      ]
+    },
+    {
+      "family": "102",
+      "subject": "Unique Games hardness",
+      "source_status": "unreviewed mathematical research claim",
+      "quantifier_scope": "forall fixed epsilon,delta in (0,1/2), exists alphabet dimension s and deterministic polynomial-time reduction, forall 3SAT inputs",
+      "nodes": [
+        {
+          "id": "102.error",
+          "statement": "Choose independent epsilon and delta in (0,1/2)",
+          "role": "parameter",
+          "source": {
+            "file": "preprints/The-Unique-Games-Theorem-September-23-2026/build/sections/00-introduction.tex",
+            "anchor": "\\label{thm:ugc}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "102.reduce",
+          "statement": "Construct polynomial reduction from 3SAT",
+          "role": "construction",
+          "source": {
+            "file": "preprints/The-Unique-Games-Theorem-September-23-2026/build/sections/00-introduction.tex",
+            "anchor": "\\label{thm:ugc}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "102.translation",
+          "statement": "Use binary-affine translation constraints",
+          "role": "constraint",
+          "source": {
+            "file": "preprints/The-Unique-Games-Theorem-September-23-2026/build/sections/00-introduction.tex",
+            "anchor": "every constraint is a translation"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "102.complete",
+          "statement": "Satisfiable 3SAT inputs have game value at least 1-epsilon",
+          "role": "completeness",
+          "source": {
+            "file": "preprints/The-Unique-Games-Theorem-September-23-2026/build/sections/00-introduction.tex",
+            "anchor": "\\label{thm:ugc}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "102.sound",
+          "statement": "Unsatisfiable 3SAT inputs have game value at most delta",
+          "role": "soundness",
+          "source": {
+            "file": "preprints/The-Unique-Games-Theorem-September-23-2026/build/sections/00-introduction.tex",
+            "anchor": "\\label{thm:ugc}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "102.claim",
+          "statement": "Claimed Unique Games conjecture hardness statement",
+          "role": "conclusion",
+          "source": {
+            "file": "preprints/The-Unique-Games-Theorem-September-23-2026/build/sections/00-introduction.tex",
+            "anchor": "\\label{thm:ugc}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        }
+      ],
+      "edges": [
+        {
+          "id": "102.e1",
+          "kind": "all_of",
+          "premises": [
+            "102.error",
+            "102.reduce",
+            "102.translation",
+            "102.complete",
+            "102.sound"
+          ],
+          "conclusion": "102.claim",
+          "meaning": "Hardness needs quantitative gap, reduction and quantifier order, not only constraints",
+          "semantic_review": "pending"
+        }
+      ]
+    },
+    {
+      "family": "197",
+      "subject": "Kaplansky direct finiteness",
+      "source_status": "unreviewed mathematical research claim",
+      "quantifier_scope": "There exists finite field K of characteristic two, finitely presented group G and finite group algebra elements a,b",
+      "nodes": [
+        {
+          "id": "197.finitefield",
+          "statement": "Finite characteristic-two coefficient field K",
+          "role": "parameter",
+          "source": {
+            "file": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/01-introduction.tex",
+            "anchor": "\\label{thm:main}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "197.group",
+          "statement": "Construct finitely presented group G",
+          "role": "construction",
+          "source": {
+            "file": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/01-introduction.tex",
+            "anchor": "\\label{thm:main}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "197.ab",
+          "statement": "Construct finite sums a,b in K[G] such that ab=1",
+          "role": "certificate",
+          "source": {
+            "file": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/01-introduction.tex",
+            "anchor": "\\label{thm:main}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "197.ba",
+          "statement": "Independently show ba is not 1",
+          "role": "defect_certificate",
+          "source": {
+            "file": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/01-introduction.tex",
+            "anchor": "\\label{thm:main}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "197.counterexample",
+          "statement": "Claim counterexample to unrestricted direct finiteness",
+          "role": "conclusion",
+          "source": {
+            "file": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/01-introduction.tex",
+            "anchor": "\\label{thm:main}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "197.obstruction",
+          "statement": "For finite G, K[G] is finite dimensional and directly finite",
+          "role": "restriction",
+          "source": {
+            "file": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/01-introduction.tex",
+            "anchor": "For a finite group $G$"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        },
+        {
+          "id": "197.cellular",
+          "statement": "Consequence: injective nonsurjective cellular automaton",
+          "role": "consequence",
+          "source": {
+            "file": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/06-cellular-automata.tex",
+            "anchor": "\\label{sec:cellular}"
+          },
+          "epistemic_status": "described_in_unreviewed_preprint"
+        }
+      ],
+      "edges": [
+        {
+          "id": "197.e1",
+          "kind": "all_of",
+          "premises": [
+            "197.finitefield",
+            "197.group",
+            "197.ab",
+            "197.ba"
+          ],
+          "conclusion": "197.counterexample",
+          "meaning": "A one-sided product alone does not establish the defect",
+          "semantic_review": "pending"
+        },
+        {
+          "id": "197.e2",
+          "kind": "implies",
+          "premises": [
+            "197.counterexample"
+          ],
+          "conclusion": "197.cellular",
+          "meaning": "Additional faithful-operator construction and group action argument required",
+          "semantic_review": "pending"
+        },
+        {
+          "id": "197.e3",
+          "kind": "contradicts",
+          "premises": [
+            "197.obstruction",
+            "197.counterexample"
+          ],
+          "conclusion": "197.counterexample",
+          "meaning": "Counterexample group cannot be finite; structural restriction, not the paper's proof",
+          "semantic_review": "pending"
+        }
+      ]
+    }
+  ]
+}
