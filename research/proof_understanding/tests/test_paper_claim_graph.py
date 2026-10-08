@@ -23,6 +23,27 @@ class PaperClaimGraphTests(unittest.TestCase):
             self.assertEqual(g['summary']['cross_file_references'],1)
             self.assertEqual(g['summary']['missing_reference_targets'],0)
 
+
+    def test_project_root_relative_input_from_section(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);(root/'sections').mkdir();(root/'figures').mkdir()
+            (root/'main.tex').write_text(r'\\input{sections/chapter}')
+            (root/'sections/chapter.tex').write_text(r'\\input{figures/overview}')
+            (root/'figures/overview.tex').write_text(r'\\begin{figure}\\label{fig:overview}\\end{figure}')
+            result=audit(root,'main.tex')
+            self.assertEqual(result['summary']['source_files'],3)
+            self.assertIn('fig:overview',result['labels'])
+
+    def test_ambiguous_root_and_child_include_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);(root/'sections').mkdir()
+            (root/'main.tex').write_text(r'\\input{sections/chapter}')
+            (root/'sections/chapter.tex').write_text(r'\\input{other}')
+            (root/'other.tex').write_text('root')
+            (root/'sections/other.tex').write_text('child')
+            with self.assertRaisesRegex(ValueError,'Ambiguous'):
+                audit(root,'main.tex')
+
     def test_cycle_rejected(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp)

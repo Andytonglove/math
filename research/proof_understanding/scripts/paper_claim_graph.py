@@ -39,6 +39,7 @@ def strip_comments(line: str) -> str:
 def expand_sources(root: Path, main_file: str, max_files: int = 200) -> list[tuple[str,int,str]]:
     """Expand literal input/include commands in order. No arbitrary TeX macro evaluation."""
     root = root.resolve()
+    project_root = (root / main_file).resolve().parent
     stack: list[str] = []
     loaded: set[str] = set()
     result: list[tuple[str,int,str]] = []
@@ -68,8 +69,19 @@ def expand_sources(root: Path, main_file: str, max_files: int = 200) -> list[tup
                 before=line[last:item.start()]
                 if before.strip(): result.append((key,lineno,before))
                 name=item[1] if item[1].endswith('.tex') else item[1]+'.tex'
-                target=(file.parent/name).resolve()
-                visit(target.relative_to(root).as_posix() if target.is_relative_to(root) else '../outside.tex')
+                # TeX resolves inputs from its compilation working directory; many
+                # modular papers use paths relative to build/, not a child section.
+                # Fall back to the including file's directory for nested projects.
+                candidates=[(project_root/name).resolve(),(file.parent/name).resolve()]
+                allowed=[p for p in dict.fromkeys(candidates) if p.is_relative_to(root)]
+                if not allowed:
+                    raise ValueError('Include path escapes repository root: '+name)
+                existing=[p for p in allowed if p.is_file()]
+                if len(existing)>1:
+                    raise ValueError('Ambiguous LaTeX include: '+name)
+                if not existing:
+                    raise FileNotFoundError('Missing LaTeX input: '+name)
+                visit(existing[0].relative_to(root).as_posix())
                 last=item.end()
             if line[last:].strip():result.append((key,lineno,line[last:]))
         stack.pop()
