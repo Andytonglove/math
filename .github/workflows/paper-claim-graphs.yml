@@ -1,0 +1,58 @@
+name: Cross-Disciplinary Proof Graph Pilot
+on:
+  push:
+    branches: [research/proof-understanding-pilot]
+    paths:
+      - research/proof_understanding/scripts/paper_claim_graph.py
+      - research/proof_understanding/tests/test_paper_claim_graph.py
+      - .github/workflows/paper-claim-graphs.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  paper-graphs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            research/proof_understanding
+            preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build
+            preprints/The-Unique-Games-Theorem-September-23-2026/build
+            preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run parser invariance tests
+        run: python -m unittest discover -s research/proof_understanding/tests -p 'test_paper_claim_graph.py' -v
+      - name: Construct three paper graphs
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOOL="research/proof_understanding/scripts/paper_claim_graph.py"
+          python "$TOOL" --root . --main "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/main.tex" --output "${RUNNER_TEMP}/paper_graph_017.json"
+          python "$TOOL" --root . --main "preprints/The-Unique-Games-Theorem-September-23-2026/build/main.tex" --output "${RUNNER_TEMP}/paper_graph_102.json"
+          python "$TOOL" --root . --main "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/paper.tex" --output "${RUNNER_TEMP}/paper_graph_197.json"
+      - name: Build comparison table
+        shell: bash
+        run: |
+          python - <<'PYCODE'
+          import json,os
+          root=os.environ["RUNNER_TEMP"]
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as out:
+              print("## Source-level reference graph comparison",file=out)
+              print("| Family | Files | Labels | References | Cross-file refs | Unresolved refs |",file=out)
+              print("|---|---:|---:|---:|---:|---:|",file=out)
+              for fid in ("017","102","197"):
+                  with open(f"{root}/paper_graph_{fid}.json") as f:d=json.load(f)["summary"]
+                  print(f"| {fid} | {d['source_files']} | {d['labels']} | {d['reference_occurrences']} | {d['cross_file_references']} | {d['missing_reference_targets']} |",file=out)
+          PYCODE
+      - name: Save reproducible graph outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-claim-graphs-${{ github.run_id }}
+          path: ${{ runner.temp }}/paper_graph_*.json
+          retention-days: 21
