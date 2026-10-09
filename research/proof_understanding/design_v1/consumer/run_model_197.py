@@ -78,6 +78,9 @@ def run(args):
                 torch_dtype=getattr(torch,args.dtype),trust_remote_code=False)
     model.eval()
     rows=[]
+    partial=Path(str(args.output)+".partial.jsonl")
+    partial.parent.mkdir(parents=True,exist_ok=True)
+    partial.write_text("",encoding="utf-8")
     for i,task in enumerate(work,1):
         if time.monotonic()-started>args.max_elapsed_seconds:
             raise RuntimeError("time cap exceeded; no complete paired result")
@@ -105,6 +108,8 @@ def run(args):
             "latency_seconds":round(time.monotonic()-begin,3),
         }
         rows.append(item)
+        with partial.open("a",encoding="utf-8") as checkpoint:
+            checkpoint.write(json.dumps(item,ensure_ascii=False)+"\n")
         print(f"{i}/{len(work)} {task['track']}/{task['condition']} "
               f"correct={item['correct']} format={format_label}",flush=True)
     result={
