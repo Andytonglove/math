@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "frozen-197-operator-mechanism-v1",
+  "artifact_kind": "evidence_carrying_mathematical_understanding",
+  "freeze_intent": "development chronology: commit this artifact before a new task generator or task labels",
+  "is_automatically_extracted": false,
+  "source": {
+    "repo": "Andytonglove/math",
+    "source_commit": "79b8d182b49e7184708bd22bfec1e9a9b1d41994",
+    "family": "197",
+    "file": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/06-cellular-automata.tex",
+    "anchors": [
+      "lem:ca-representation",
+      "eq:ca-operator",
+      "eq:ca-composition",
+      "eq:ca-coefficient",
+      "prop:ca-transfer"
+    ],
+    "provenance_assurance": "direct text inspection; local elementary algebra independently rederived; deep counterexample not reviewed"
+  },
+  "semantic_contract": {
+    "mathematical_objects": "An arbitrary group G, an arbitrary field K, the group algebra K[G] of finite-support functions on G, and all configurations x:G->K.",
+    "multiplication": "For c=sum c_u*u and d=sum d_v*v, (c*d)_w=sum_{uv=w} c_u d_v.",
+    "right_neighbor_definition": "T_c(x)(g)=sum_{u in G} c_u*x(g*u).",
+    "left_neighbor_definition": "S_c(x)(g)=sum_{u in G} c_u*x(u*g).",
+    "essential_quantifier": "Statements are conditional for every field K and group G; no existence of special a,b follows from this operator lemma.",
+    "exact_formal_theorem_correspondence": "unknown; not independently checked against Lean in this project",
+    "external_lean_kernel_build": "not_run",
+    "original_advanced_existence_claim": "unverified_by_this_project",
+    "no_silent_repair": true
+  },
+  "mechanisms": [
+    {
+      "id": "well_defined",
+      "premises": [
+        "c has finite support"
+      ],
+      "conclusion": "T_c and S_c are defined on all K^G configurations, not just finitely supported x",
+      "proof": "For fixed g, both defining sums have finitely many nonzero terms.",
+      "status": "independent_elementary_derivation"
+    },
+    {
+      "id": "right_homomorphism",
+      "premises": [
+        "right-neighbor definition",
+        "coefficient multiplication"
+      ],
+      "conclusion": "(T_c composed with T_d)(x)=T_(c*d)(x)",
+      "proof": "At g, sum_u c_u sum_v d_v x(g*u*v); regroup by w=u*v.",
+      "status": "independent_elementary_derivation"
+    },
+    {
+      "id": "left_anti_homomorphism",
+      "premises": [
+        "left-neighbor definition",
+        "coefficient multiplication"
+      ],
+      "conclusion": "(S_c composed with S_d)(x)=S_(d*c)(x)",
+      "proof": "At g, sum_u c_u sum_v d_v x(v*u*g); regroup by w=v*u. Coefficients commute in field K but group elements need not.",
+      "status": "independent_elementary_derivation"
+    },
+    {
+      "id": "faithfulness",
+      "premises": [
+        "right-neighbor definition",
+        "delta_h is 1 at h and 0 otherwise"
+      ],
+      "conclusion": "(T_c delta_h)(e)=c_h at group identity e; thus T_c=0 implies c=0",
+      "proof": "Only u=h contributes at g=e; repeat for all h.",
+      "status": "independent_elementary_derivation"
+    },
+    {
+      "id": "injectivity",
+      "premises": [
+        "a*b=1 in K[G]",
+        "right_homomorphism"
+      ],
+      "conclusion": "T_b is injective",
+      "proof": "T_a*T_b=T_(a*b)=I; any map with a left inverse is injective.",
+      "status": "conditional_elementary_derivation"
+    },
+    {
+      "id": "image_characterization",
+      "premises": [
+        "a*b=1",
+        "right_homomorphism"
+      ],
+      "conclusion": "im(T_b)={y in K^G:T_(b*a)y=y}",
+      "proof": "If y=T_b x then T_b*T_a y=T_b*T_a*T_b x=y; conversely if T_(b*a)y=y then y=T_b(T_a y).",
+      "status": "conditional_elementary_derivation"
+    },
+    {
+      "id": "non_surjectivity",
+      "premises": [
+        "a*b=1",
+        "b*a!=1",
+        "faithfulness",
+        "image_characterization"
+      ],
+      "conclusion": "T_b is not surjective",
+      "proof": "Choose h with coefficient of ba-1 nonzero; then T_(ba)(delta_h)-delta_h has nonzero value at e, so delta_h is outside im(T_b).",
+      "status": "conditional_elementary_derivation"
+    }
+  ],
+  "proof_obligations": [
+    {
+      "id": "O1",
+      "claim": "right-neighbor multiplicativity and left-neighbor reversed multiplication",
+      "state": "independent_algebraic_proof"
+    },
+    {
+      "id": "O2",
+      "claim": "finite support makes actions well-defined for any configuration",
+      "state": "independent_algebraic_proof"
+    },
+    {
+      "id": "O3",
+      "claim": "faithfulness and image fixed-point equivalence",
+      "state": "independent_algebraic_proof"
+    },
+    {
+      "id": "O4",
+      "claim": "source constructs a finitely presented group with a*b=1 and b*a!=1",
+      "state": "unresolved_in_this_project"
+    },
+    {
+      "id": "O5",
+      "claim": "the relevant source theorem exactly matches a particular Lean formal statement",
+      "state": "unresolved_in_this_project"
+    }
+  ],
+  "limits": [
+    "Do not use finite S3 as a witness that ab=1 but ba!=1: finite-dimensional group algebras are directly finite.",
+    "Do not interchange right-neighbor and left-neighbor composition order for a noncommutative group.",
+    "Do not claim source manuscript's exotic counterexample is independently established.",
+    "Do not conflate a verified local conditional lemma with verification of the source main theorem.",
+    "The present manually authored artifact is public development content; no unseen test guarantee."
+  ],
+  "reuse": [
+    "Knowing the multiplication convention predicts what a composition of two convolution-like operators means.",
+    "A certificate that ba-1 has a nonzero coefficient supplies a concrete excluded configuration delta_h, conditional on ab=1.",
+    "An image is the fixed-point set of T_(ba) only under ab=1 and the right-neighbor representation."
+  ],
+  "evaluation_status": {
+    "producer": "human/assistant manually authored; not automatic extraction benchmark",
+    "consumer": "not_evaluated_at_freeze",
+    "test_queries": "must be created after this commit for chronological freeze",
+    "semantic_fidelity": "local scope checked only, global correspondence unknown",
+    "intended_role": "development pilot, not publication-ready blind experiment"
+  }
+}
