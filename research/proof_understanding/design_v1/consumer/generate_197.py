@@ -34,7 +34,7 @@ def load_frozen(root:Path)->dict:
         raise ValueError("incorrect frozen artifact ID")
     sem=doc["semantic_contract"]
     if sem.get("external_lean_kernel_build")!="not_run" or \
-            sem.get("exact_formal_theorem_correspondence")!="unknown":
+            not str(sem.get("exact_formal_theorem_correspondence","")).startswith("unknown"):
         raise ValueError("unsupported semantic certification in artifact")
     if not sem.get("no_silent_repair"):
         raise ValueError("no-silent-repair policy missing")
