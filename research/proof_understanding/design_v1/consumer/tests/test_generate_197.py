@@ -29,6 +29,15 @@ class Frozen197ConsumerTests(unittest.TestCase):
                         self.assertEqual(exact_direct(a,b,h,track),
                                          independent_oracle(a,b,h,track))
 
+    def test_concrete_orientation_counterexample(self):
+        # Two noncommuting singleton permutations have ab!=ba.
+        # A swap of composition direction produces different binary masks.
+        self.assertEqual(exact_direct(2,4,0,"right"),8)
+        self.assertEqual(exact_direct(2,4,0,"left"),16)
+        for track in TRACKS:
+            self.assertEqual(exact_direct(2,4,0,track),
+                             independent_oracle(2,4,0,track))
+
     def test_noncommutativity_is_not_ignored(self):
         self.assertTrue(any(mul(a,b)!=mul(b,a) for a in range(64) for b in range(64)))
 
