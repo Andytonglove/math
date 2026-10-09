@@ -47,3 +47,32 @@ The bounded CPU-only Qwen2.5-1.5B model run was started at GitHub Actions run 37
 Publication-level claims are blocked by: manual artifact production, same-researcher task design, public predictable seed, only a local 197 conditional lemma, unequal input budgets, tiny model and only two independent base-case clusters in the reader smoke test. The central question of source-to-knowledge transfer is therefore NOT solved.
 
 Next prioritize a capable, authorized reader model with structural held-out mathematics and rigorous fidelity gate; a stronger summary/extract matched for *mathematical information and tokens*; a truly independent evaluator; and a future automatically generated artifact whose source claims are scrutinized rather than silently repaired.
+
+
+## Final actual reader execution: bounded CPU model failed to finish, no artifact-benefit claim
+
+The bounded Qwen2.5-1.5B-Instruct run https://github.com/Andytonglove/math/actions/runs/37964028280 reached its 950-second model time cap during a four-condition paired task set. Exactly **10 of 24 planned responses** were completed before the cap; all 10 were syntactically valid raw JSON but **all 10 mathematical masks were wrong**. GitHub Actions marked the job FAILED. Specifically, the first right-neighbor instance completed all four conditions, the first left-neighbor instance completed all four conditions, and the first mixed instance completed background and summary only. The remaining planned responses did not execute.
+
+Inference trace: right/background 17:08:56, right/summary 17:09:45, right/artifact 17:11:39, right/source 17:15:44; left/background 17:16:17, left/summary 17:17:07, left/artifact 17:19:01, left/source 17:23:05, mixed/background 17:23:39, mixed/summary 17:24:28, then the deliberate timeout. The source-excerpt inputs required about four minutes each on this tiny CPU reader. Since 14 planned responses were not produced, **do not report 0/24 or complete paired accuracy**. This is an incomplete capacity-floor diagnostic, not an effect-size estimate.
+
+The original runner only wrote the complete results JSON after all examples; the failing run consequently lacked per-output JSON artifacts, though GitHub job logs preserve count, timing, correctness and JSON format status. A checkpoint-on-every-response patch was added subsequently for future runs. The failing run used its own pinned earlier branch commit and was not affected by later fixes.
+
+## Independent mathematical mechanism transfer: Group → Monoid
+
+In a transformation monoid M generated under composition by natural-number functions L(n)=max(n-1,0) and R(n)=n+1, we have L composed with R = identity for every natural n, while R composed with L is not identity (at n=0 it equals 1). Take singleton basis elements a=[L], b=[R] in K[M] over any field K. Then ab=1 while ba!=1. This is **a MONOID algebra example, not a GROUP algebra counterexample**; group invertibility was removed.
+
+The finite-support right-neighbor action T_c x(g)=sum_u c_u x(gu) remains defined on K^M and still satisfies T_c T_d=T_cd. Hence T_b is injective. If y=T_b x, then y(1)=x(R) and y(RL)=x((RL)R)=x(R); thus the configuration delta_1 with values 1 at identity and 0 at RL is not in its image. This supplies a full elementary symbolic proof of an injective/non-surjective operator in the monoid setting. It does **not** verify the source family's unusual finitely presented group or the published high-level Kaplansky claim.
+
+New files: consumer/bicyclic_monoid_transfer.py, consumer/tests/test_bicyclic_monoid_transfer.py, consumer/MONOID_TRANSFER_NOTE.md. This is researcher-derived, not AI-reader-discovered mathematics. It shows what a good reusable mechanism output can look like: changing the carrier class preserves the conditional operator step but changes the existence barrier.
+
+## Final CI and scope
+
+GitHub Actions https://github.com/Andytonglove/math/actions/runs/37965617786 completed successfully, running **21 tests**, including exact finite F2[S3] algebra via an independently coded permutation implementation, the new monoid symbolic/finite-prefix controls, model-response parser tests, freeze hash and public data integrity checks. All 36 chosen task labels agree between two computation paths; exhaustive oracle tests cover 73,728 finite coefficient-pair/input/track cases.
+
+The model run did not invoke any paid model APIs; it used the public GitHub-hosted CPU runner. GitHub account billing was not checked, so no dollar figure is claimed. No Lean/Comparator execution, high-level mathematical peer review or human subjects experiment was performed.
+
+## Scientific decision
+
+Do **not** rerun the identical costly 24-task long-context protocol on another 0.5–1.5B CPU model. The main computation task is too difficult for such models and source-context length dominates runtime. First redesign the downstream test to measure *structured mathematical insight and calibrated assumption/unknown handling*, not full six-bit convolution by hand. Then use a capable, explicitly authorized reader model and a genuinely independently selected hidden structural test set.
+
+A manual frozen artifact plus exact new mathematical consequences demonstrates feasibility of the OUTPUT OBJECT, not successful AUTOMATIC EXTRACTION or machine consumer transfer. The main hypothesis remains unconfirmed. No graph superiority is inferred.

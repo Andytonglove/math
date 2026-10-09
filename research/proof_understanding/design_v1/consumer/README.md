@@ -37,3 +37,12 @@ From repository root:
     python3 -m unittest discover -s research/proof_understanding/design_v1/consumer/tests -p test_*.py -v
 
 Only the GitHub model runner, if separately invoked, should receive the prompts.jsonl; the gold.json is used by the offline scorer. Public task generation after artifact freeze is not equivalent to blind preregistration.
+
+
+## Completed developmental checks and failure transparency
+
+Full updated group-algebra and reader CI: 21 tests passed, including independent tuple-permutation arithmetic. Development dataset contains 36 exact task labels and 144 prompts with 12 per operator track and 8–10 distinct nonzero masks per track. Frozen Git SHA and blob SHA remain unchanged.
+
+A bounded Qwen2.5-1.5B CPU execution ended after the 950-second cap, completing 10 of 24 intended responses. All 10 produced correctly formatted JSON but none had the right mathematics. Two full four-mode pairs and two other prompts do NOT make a balanced comparative result. The original runner lost raw completed responses upon its timeout; later code now writes per-response checkpoints.
+
+Do not repeat this exact low-capacity mask task experiment and call its results proof comprehension. Next experiment should test independent symbolic transfer and assumption boundaries with a capable authorized model and budget-matched baselines. Detailed run log: https://github.com/Andytonglove/math/actions/runs/37964028280 . Research report: ../reports/2026-10-10_iteration09_frozen_reader.md.

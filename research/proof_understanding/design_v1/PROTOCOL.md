@@ -39,3 +39,14 @@ Allow multiple simultaneously valid findings: different quantifier scope, extra 
 The A.3/A.4 hierarchy in arXiv:2610.08144 is an unrestricted definedness obstacle, not a prohibition on partial scoped checking. We do not promise a complete semantics-preserving NL/Lean translator. Evaluate selective accuracy jointly with useful coverage, and compare artifact-only reuse against information-budget matched prose and source snippets.
 
 Add negative controls with invalid natural-language reasoning but true conclusions, source/formal derivative mismatch, unproven minimum-existence presupposition and different proof methods. The local instrument in semantic_bridge/ supports only five specific cases. A clean CI run is NOT a certificate that a whole research source or extracted mathematical mechanism is correct. The independent-reader transfer experiment is still outstanding.
+
+
+## Pilot lessons: frozen-v1 chronology and limited reader evaluation
+
+The 197 local operator artifact was pinned to Git commit 04fef27 before development tests were introduced in later commits; immutable content is checked via Git blob hash. This establishes chronological freezing **only**. Tests are deterministically derived from a public seed; model task designer and artifact author are not blinded to each other's mathematics. No contamination-proof research benchmark claim is permitted.
+
+Two independent finite F2[S3] algebra implementations agree on 36 selected public tasks, and exhaustive regression checks pass. The frozen artifact-only model prompt does not provide the original paper, while the source excerpt appears in a separate control. But context information and token counts are not matched; a shorter correct summary already carries much of the same operator law information.
+
+The Qwen2.5-1.5B CPU attempt at 24 prompts ended by timeout after 10, all correct-schema JSON but all incorrect masks. No complete paired result was produced; the first runner only wrote final JSON at experiment completion, so raw responses were not archived in this failed run. Checkpointing is now added for future executions. Do not infer an effect from the incomplete tiny-model outputs.
+
+Prioritize symbolic mathematical statement/intervention analysis and source-specific novel transfer over bit-mask arithmetic, distinguish task design from ability validation, require a sufficiently capable and authorized reader, and separately score cost, schema and mathematical correctness.

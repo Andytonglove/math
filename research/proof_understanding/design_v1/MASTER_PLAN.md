@@ -123,3 +123,14 @@ Graph 只在能够表达作用域、合取义务、分情况穷尽性、量词�
 本轮已经检查 NavierStokesAndEuler 固定 commit f9e8bc5 的相关 Lean 声明，并建立五项本地例子、六个单元测试，CI 完成成功：https://github.com/Andytonglove/math/actions/runs/37958200358 。这是有限局部验证，绝不是 NS 全文正确性判断。更详细的新文献矩阵和记录分别在 design_v1/evidence/RELATED_WORK_2026_10_10.md、design_v1/reports/2026-10-10_semantic_bridge.md。
 
 与 Beyond Compilation、FaithformBench、Robust Proof Autoformalization、The Faithfulness Gap、ProofFlow、LeanArchitect 的对比说明：做通用 NL/Lean mismatch detector、图或局部扰动 benchmark 不能算突破。关键未完成目标依旧是 **忠实冻结工件后，在无原证明的独立数学任务中观察到有效迁移**。优先做这个，暂停无关 Graph 扩充。
+
+
+## 12. 第一次冻结工件实验后的科研决策（2026-10-10）
+
+工件 197_operator_artifact_v1.json 已在 Git commit 04fef27 冻结，后续提交才加入任务生成器。有限群 F2[S3] 的36个正式开发样例、4种上下文144条提示、真实原文节选，以及两条独立实现的算术 oracle 已在 CI 检验。经改进的运行版本21项测试全部通过；原始高难群存在性证明与 Lean 对应仍属未知。
+
+模型实验 GitHub run 37964028280 由于长上下文 CPU 超时：计划24条，实际完成10条，数学答案全部错误但原始JSON合法；其余没有计算。不能从这个结果推断Graph或解释工件无效。旧脚本失败时不保存半程原始回复；新脚本已改为每条检查点。首次实验不是完整对照，严格禁止宣传 0/24、平均增益或统计显著性。
+
+更有价值的独立数学迁移：原群代数有限支撑算子证明可延伸到幺半群。自然数上的左右移位 L(n)=max(n-1,0), R(n)=n+1 生成的变换幺半群满足 LR=1、RL≠1；在幺半群代数中构造显式单侧逆，并经 T_c 作用构造单射非满射配置映射。注意原论文讨论的是群而非幺半群！这说明应区分对证明机制非必要的 group 假设与对高阶群代数存在性结论关键的 group 假设。该结果是手工数学推导，尚未由 AI 阅读器自行发现。
+
+下一轮暂停重跑同样的六位掩码算题和低能力长上下文实验。先设计更有辨识力的符号级迁移、原论证错误诊断、适用前提校准及选择性UNKNOWN。算法研究重点转向 producer 自动提炼；若要证明能力增益，需配置经用户明确授权的强模型资源、数学审查和真正独立的结构化留出测试，并严格匹配传递信息与阅读成本。

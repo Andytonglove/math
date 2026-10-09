@@ -3,8 +3,8 @@
   "project": "Understanding AI-Generated Mathematical Proofs",
   "date": "2026-10-10",
   "round_1": "completed_adversarial_mathematical_transfer",
-  "next": "freeze_semantically_scoped_artifact_before_independent_consumer_experiment",
-  "model_main_effect": "not_measured",
+  "next": "design_symbolic_assumption_transfer_and_calibrated_invalid_source_diagnostics; stronger_authorized_reader; automatic_producer",
+  "model_main_effect": "unmeasured_due_to_incomplete_and_capacity_floor",
   "paid_inference": "not_authorized",
   "semantic_contract_review": {
     "status": "passed_restricted_local_diagnostics",
@@ -13,5 +13,21 @@
     "unit_tests": 6,
     "run_id": 37958200358,
     "full_equivalence": "not_established"
+  },
+  "last_iteration": {
+    "identity": "iteration09_frozen_artifact_and_group_to_monoid_transfer",
+    "frozen_commit": "04fef27eed6f3a10e529f728f3f478cb459f0821",
+    "task_count": 36,
+    "context_records": 144,
+    "unit_tests_last_ci": 21,
+    "independent_oracle": "finite F2[S3] two implementations",
+    "math_transfer": "bicyclic_monoid_exhibits_one_sided_inverse_not_a_group_algebra_example",
+    "reader_run": 37964028280,
+    "reader_run_status": "failed_time_cap_after_10_of_24",
+    "completed_correct": 0,
+    "completed_attempts": 10,
+    "paid_api": "none",
+    "source_advanced_theorem_verified": false,
+    "artifact_only_machine_benefit": "NOT_ESTABLISHED"
   }
 }
