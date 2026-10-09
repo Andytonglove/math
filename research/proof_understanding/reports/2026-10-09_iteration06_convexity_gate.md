@@ -29,3 +29,9 @@ Next gate: have a producer create a source-grounded mechanism artifact WITHOUT s
 
 ## Literature and positioning
 ProofFlow (ICLR 2026) already uses dependency graphs and faithfulness for Lean autoformalization (https://proceedings.iclr.cc/paper_files/paper/2026/hash/5fce5198dbf92d5ff45f74504431e2ff-Abstract-Conference.html). LeanArchitect (ITP 2026) already synchronizes Lean blueprints (https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ITP.2026.25). Explorable Theorems already grounds mathematical explanation in Lean (https://arxiv.org/abs/2604.02598). These are substantive overlaps, not decorative references. Any future novel claim must be about faithful, boundary-aware abstraction enabling independently verifiable reasoning AFTER the original source is removed, with an actual controlled reader experiment.
+
+## Completed GitHub validation and sharper mechanism, 2026-10-09
+
+The first new branch commit 68a5ce58b543e2b126751a5cac928542112d9a19 passed GitHub Actions 37876715982. The standard unittest discovery ran 61 tests in 0.757s, including newly committed barrier and finite S3 checks. A further exact fixed-A variational oracle and two corresponding tests have now been prepared; report their CI status only after the subsequent workflow completes.
+
+For any rational-valued barrier f and fixed rational A, let b=max(0,f(A)). If 0<A<1 and b<A, the exact rational-theta feasibility cutoff is nu>(1-b)/(A-b). In the nonconvex example at A=3/4 the cutoff is 529/273, strictly below 39/20. Global convexity collapses the infimum of these local cutoffs to the endpoint derivative expression; its absence means endpoint data alone cannot support universal extrapolation. This supplies a source-inspired general analytical abstraction as well as the explicit adversarial control.

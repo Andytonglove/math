@@ -53,6 +53,14 @@ This is an independently provable local extension of the **parameter selection m
 
 The identity acts as a positive-polynomial proof certificate, the explicit rational tuple as a counterexample to overgeneralization, and the conditional claim as a reusable abstraction. These are considerably stronger artifacts than the bare instruction 'replace 2 by r/(r-1)'.
 
+### Global variational view (valid even without convexity)
+
+For a rational-valued function f on rational A in (0,1), define b(A)=max(0,f(A)) and D={A rational: 0<A<1, b(A)<A}. At a fixed A in D, there is a rational theta with 0<theta<A, f(A)<theta and nu(A-theta)>1-theta **if and only if**
+nu > R_f(A):=(1-b(A))/(A-b(A)).
+Indeed nu<=1 is impossible. For nu>1, the second condition becomes theta < (nu*A-1)/(nu-1). A rational theta strictly between b(A) and this upper bound exists exactly when nu(A-b(A))>1-b(A). Thus for D nonempty, global feasibility is equivalent to nu>Gamma_f, where Gamma_f=inf_{A in D} R_f(A) (Gamma_f=+infinity if D is empty). The strict boundary is always excluded even if the infimum is attained.
+
+For the nonconvex control at A=3/4, f(A)=495/1024, this fixed-A threshold is (529/1024)/(273/1024)=529/273<39/20<2. The endpoint derivative rule fails because it confuses an endpoint limit with a **global supremum of feasible secant gaps**. Convexity is a sufficient geometric reason that the endpoint controls the full interval. This identifies a general, proof-carrying transfer mechanism: use the variational expression for arbitrary barriers; specialize to the endpoint derivative only after certifying a global tangent inequality.
+
 ## 5. Second source-inspired mechanism: the 197 action contract
 For a field K, group G and finitely supported c=sum_u c_u*u in K[G], let (T_c x)(g)=sum_u c_u x(gu) on all configurations x:G->K. Finite support makes the operator well-defined. A direct regrouping gives T_c composed with T_d equals T_cd, and the delta configurations recover the coefficients, so c->T_c is faithful. Conditional on ab=1, T_a T_b=I makes T_b injective. Its image is exactly the fixed-point set of T_ba; if ba is not 1 then faithfulness exposes a delta configuration not in the image.
 

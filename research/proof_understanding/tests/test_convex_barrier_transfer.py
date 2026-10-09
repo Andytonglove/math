@@ -41,6 +41,22 @@ class ConvexBarrierTests(unittest.TestCase):
         self.assertEqual(len(set(t["id"] for t in d["tasks"])),23)
         self.assertEqual([t["id"] for t in d["tasks"]],[g["id"] for g in d["gold"]])
         self.assertTrue(all(len(t["id"])==16 for t in d["tasks"]))
+    def test_general_fixed_a_variational_certificate(self):
+        from convex_barrier_transfer import local_threshold,fixed_a_witness
+        a=F(3,4)
+        for _,terms in FAMILIES:
+            fa=value(terms,a);crit=local_threshold(fa,a)
+            self.assertIsNone(fixed_a_witness(fa,a,crit))
+            self.assertIsNone(fixed_a_witness(fa,a,crit-F(1,1000)))
+            t=fixed_a_witness(fa,a,crit+F(1,1000))
+            self.assertTrue(valid(fa,crit+F(1,1000),a,t))
+    def test_nonconvex_fixed_a_cutoff_below_endpoint_rule(self):
+        from convex_barrier_transfer import local_threshold,fixed_a_witness
+        a=F(3,4);fa=nonconvex(a)
+        self.assertEqual(local_threshold(fa,a),F(529,273))
+        self.assertLess(F(529,273),F(39,20))
+        self.assertLess(F(39,20),F(2))
+        self.assertTrue(valid(fa,F(39,20),a,fixed_a_witness(fa,a,F(39,20))))
     def test_reject_invalid_mixture(self):
         for terms in ([],[(2,F(1,2))],[(1,F(1))],[(3,F(-1))]):
             with self.assertRaises(ValueError):value(terms,F(1,2))

@@ -49,6 +49,25 @@ def witness(terms,nu,limit=120):
             if valid(value(terms,a),nu,a,t):return a,t
     raise RuntimeError("witness search limit: raise limit")
 
+def local_threshold(fvalue,a):
+    """Exact threshold for one rational A, independent of convexity.
+    Let b=max(0,f(A)); finite iff 0<A<1 and b<A.
+    """
+    a=F(a);b=max(F(0),F(fvalue))
+    if not 0<a<1 or b>=a:raise ValueError("inadmissible fixed A")
+    return (1-b)/(a-b)
+
+def fixed_a_witness(fvalue,a,nu):
+    """Return rational theta precisely when nu exceeds the fixed-A threshold."""
+    a=F(a);nu=F(nu)
+    cut=local_threshold(fvalue,a)
+    if nu<=cut:return None
+    low=max(F(0),F(fvalue))
+    high=(nu*a-1)/(nu-1)
+    theta=(low+high)/2
+    assert valid(F(fvalue),nu,a,theta)
+    return theta
+
 def nonconvex(x):
     return x*x-3*x**3*(1-x)**2
 

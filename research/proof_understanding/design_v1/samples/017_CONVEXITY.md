@@ -25,5 +25,13 @@ h(A)=495/1024 < 496/1024=theta;
 nu*(A-theta)-(1-theta) = 3/1280 > 0.
 Thus the system IS feasible even though nu<2. Blindly transferring the derivative-only rule would give an incorrect impossibility verdict. This is a genuine counterexample to an oversimplified abstract mechanism; it is NOT a counterexample to the source manuscript's theorem.
 
+### Global variational view (valid even without convexity)
+
+For a rational-valued function f on rational A in (0,1), define b(A)=max(0,f(A)) and D={A rational: 0<A<1, b(A)<A}. At a fixed A in D, there is a rational theta with 0<theta<A, f(A)<theta and nu(A-theta)>1-theta **if and only if**
+nu > R_f(A):=(1-b(A))/(A-b(A)).
+Indeed nu<=1 is impossible. For nu>1, the second condition becomes theta < (nu*A-1)/(nu-1). A rational theta strictly between b(A) and this upper bound exists exactly when nu(A-b(A))>1-b(A). Thus for D nonempty, global feasibility is equivalent to nu>Gamma_f, where Gamma_f=inf_{A in D} R_f(A) (Gamma_f=+infinity if D is empty). The strict boundary is always excluded even if the infimum is attained.
+
+For the nonconvex control at A=3/4, f(A)=495/1024, this fixed-A threshold is (529/1024)/(273/1024)=529/273<39/20<2. The endpoint derivative rule fails because it confuses an endpoint limit with a **global supremum of feasible secant gaps**. Convexity is a sufficient geometric reason that the endpoint controls the full interval. This identifies a general, proof-carrying transfer mechanism: use the variational expression for arbitrary barriers; specialize to the endpoint derivative only after certifying a global tangent inequality.
+
 ## Evidence and unknowns
 Independent algebraic derivation and exact rational substitution establish all claims on this page. Python tests cover samples but do not replace the general proof. The high-level pi theorem, any interpolation extension and real-reader benefit are unverified.
