@@ -1,0 +1,28 @@
+# Producer–artifact–consumer protocol v0.1
+
+A source unit is a bounded complete argument with explicit imported assumptions. The producer sees source, background, intended audience and communication budget, but not realized evaluation queries or gold answers. Development queries are allowed and disclosed.
+
+The producer freezes a versioned/hash-identified artifact containing claim contract, mechanism, proof obligations, boundaries, reusable statements, evidence and unresolved matters. The consumer starts in a fresh session with artifact, common background and new query. In the primary track it cannot fetch the original proof or a renamed equivalent. Retrieval/augmentation is secondary and logs every call and token.
+
+## Baselines
+
+Background; Statement; full selected Source; budget-matched Extract; ordinary Summary; evidence-carrying Artifact-Prose; same-mathematical-content Artifact-Graph; optional Source+Artifact. Main comparison is artifact versus summary/extract and source-retention/cost; graph is a second-level ablation.
+
+## Validity controls
+
+- Equal query definitions and explicit permitted background, without target answer/theorem wrappers hidden in the background.
+- Artifacts frozen before realized test query selection; structural and source-family holdout, not only changed random numbers.
+- Opaque IDs, independent exact or mathematically justified oracle, no gold in prompts or retrieval.
+- Public development examples cannot be reused as secret tests. Deduplicate exact and structural tasks.
+- Separate source location, independent derivation, finite enumeration, formal checking, semantic correspondence and expert review.
+- A failed proof search means unknown, not false. A disabled script does not establish necessity of an assumption.
+- Mathematical correctness, unsupported statements, explanation coverage, parser compliance, abstention and cost are separate outputs.
+- Empty artifacts cannot earn high faithfulness without coverage; a graph with extra useful claims must not beat prose by information imbalance.
+- Correlated perturbations clustered by original proof/base construction; small pilot scores are descriptive only.
+- AI origin recorded, not inferred from style. Match human-source controls where feasible.
+
+## Success and limitations
+
+A useful artifact may retain source-level utility at lower reading cost instead of beating an unlimited source reader. Report construction and amortized reuse costs separately. No human benefit is inferred from machine consumer results.
+
+The old 0.5B/1.5B experiment is not a test of this protocol: contexts were manually prepared paraphrases and not independently frozen; all math task definitions were in the prompt; no true artifact-only reuse effect was isolated. The present two samples are manual development artifacts, not automatic-method results.
