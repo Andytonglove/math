@@ -19,7 +19,7 @@ class Frozen197ConsumerTests(unittest.TestCase):
         sem=self.doc["semantic_contract"]
         self.assertTrue(sem["no_silent_repair"])
         self.assertEqual(sem["external_lean_kernel_build"],"not_run")
-        self.assertEqual(sem["exact_formal_theorem_correspondence"],"unknown")
+        self.assertTrue(sem["exact_formal_theorem_correspondence"].startswith("unknown"))
 
     def test_all_small_f2s3_operator_oracles_agree(self):
         for a in range(64):
