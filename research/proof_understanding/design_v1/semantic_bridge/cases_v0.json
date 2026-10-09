@@ -1,0 +1,100 @@
+{
+  "schema_version": "0.1",
+  "disclaimer": "Source-reported examples and restricted mathematical checks. Evidence of difference is not a complete proof of original theorem failure.",
+  "cases": [
+    {
+      "id": "NS-DERIVATIVE-4-5",
+      "kind": "derivative_loss",
+      "natural_language_derivative_loss": 4,
+      "formal_derivative_loss": 5,
+      "expected": "formal_requires_higher_input_regularity",
+      "evidence": {
+        "natural_language": "arxiv:2610.08144v1 Section 3.1, manuscript equation (8.19) as reported; source NL independent math check pending",
+        "formal": "openai/NavierStokesAndEuler commit f9e8bc5b38b6e212696e8a30e3e91517af887bbd NavierStokes/SmoothFamilyTorusInverse.lean 1059-1080 norm_derivativeWord_inverse_le (w.length + 5)",
+        "confidence": "formal source read and source-reported NL claim; bridging original operator remains unknown"
+      }
+    },
+    {
+      "id": "NS-PRESSURE-EXTRA-A",
+      "kind": "rhs_extra_variable",
+      "nl_rhs_dependencies": [
+        "B_R",
+        "R",
+        "C_T"
+      ],
+      "formal_rhs_dependencies": [
+        "A_R",
+        "B_R",
+        "R",
+        "C_T"
+      ],
+      "expected": "formal_adds_rhs_dependencies",
+      "evidence": {
+        "natural_language": "arxiv:2610.08144v1 Section 3.2, source manuscript equation (10.19) as reported",
+        "formal": "openai/NavierStokesAndEuler commit f9e8bc5b38b6e212696e8a30e3e91517af887bbd NavierStokes/R3/PressureFlux.lean 576 exists_uniform_actual_pressure_flux_bound",
+        "confidence": "listed dependency difference only; overall estimates could be incomparable"
+      }
+    },
+    {
+      "id": "NS-TIME-AE-ALL",
+      "kind": "ae_vs_all",
+      "natural_language_scope": "almost_everywhere",
+      "formal_scope": "everywhere",
+      "expected": "formal_time_scope_stronger",
+      "evidence": {
+        "natural_language": "arxiv:2610.08144v1 Section 3.2 eq(10.19) a.e. t",
+        "formal": "same pinned PressureFlux.lean uses forall t in Ioo 0 T; surrounding input hypotheses differ",
+        "confidence": "time-scope projection only; stronger quantifier alone does not order full bound"
+      }
+    },
+    {
+      "id": "POLYNOMIAL-PROOF-CORRECTION",
+      "kind": "incorrect_factorization",
+      "claimed_polynomial": [
+        1,
+        -1,
+        -1,
+        1
+      ],
+      "incorrect_factorization": {
+        "left": [
+          -1,
+          1
+        ],
+        "right": [
+          1,
+          2,
+          1
+        ]
+      },
+      "correct_factorization": {
+        "left": [
+          1,
+          -2,
+          1
+        ],
+        "right": [
+          1,
+          1
+        ]
+      },
+      "expected": "proof_argument_incorrect_theorem_can_be_true",
+      "evidence": {
+        "natural_language": "arxiv:2610.08144v1 Example 2.1",
+        "formal": "the authors discuss a different compiled Lean proof, but the present audit proves only polynomial identities independently",
+        "confidence": "exact local counterexample at x=0; not an audit of their generated Lean screenshot"
+      }
+    },
+    {
+      "id": "MISSING-EXISTENCE-PRESUPPOSITION",
+      "kind": "missing_exists",
+      "finite_samples": 100,
+      "expected": "existence_presupposition_is_false",
+      "evidence": {
+        "natural_language": "arxiv:2610.08144v1 Example 4.3 polynomial p(n,x1,x2)=x1+x2-n",
+        "formal": "authors discuss Nat.sInf empty default zero; this audit uses a symbolic root witness for all n",
+        "confidence": "self-contained symbolic proof; this finite illustrative case is NOT the Sigma2-completeness reduction"
+      }
+    }
+  ]
+}
