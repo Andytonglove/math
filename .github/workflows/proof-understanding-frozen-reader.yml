@@ -1,0 +1,78 @@
+name: Frozen 197 Artifact - Bounded Source-Deprived Open Model
+on:
+  push:
+    branches: [research/proof-understanding-pilot]
+    paths:
+      - .github/workflows/proof-understanding-frozen-reader.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  independent-consumer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 27
+    env:
+      HF_HOME: /tmp/frozen-proof-reader-hf
+      HF_HUB_DISABLE_TELEMETRY: "1"
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            research/proof_understanding/design_v1/frozen
+            research/proof_understanding/design_v1/consumer
+            research/proof_understanding/scripts/s3_operator_transfer.py
+            preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/06-cellular-automata.tex
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install bounded CPU-only open-weight runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --no-cache-dir "torch==2.6.0" --index-url https://download.pytorch.org/whl/cpu
+          python3 -m pip install --no-cache-dir "transformers==4.49.0" "safetensors>=0.4.5"
+      - name: Verify frozen artifact, two independent group-algebra oracles, and reader schema
+        run: python3 -m unittest discover -s research/proof_understanding/design_v1/consumer/tests -p "test_*.py" -v
+      - name: Generate public post-freeze mathematical tasks
+        run: |
+          python3 research/proof_understanding/design_v1/consumer/generate_197.py \
+            --repo-root . --bases 12 --output-dir "${RUNNER_TEMP}/consumer_197"
+      - name: Run source-deprived model reader on paired controls
+        run: |
+          python3 research/proof_understanding/design_v1/consumer/run_model_197.py \
+            --dataset-dir "${RUNNER_TEMP}/consumer_197" \
+            --model Qwen/Qwen2.5-1.5B-Instruct --dtype bfloat16 \
+            --examples-per-track 2 --max-new-tokens 64 \
+            --max-input-tokens 6144 --max-elapsed-seconds 950 \
+            --output "${RUNNER_TEMP}/frozen_197_reader_results.json"
+      - name: Summarize actual accuracy and token budgets
+        run: |
+          python3 - <<'PYCODE' >> "$GITHUB_STEP_SUMMARY"
+          import json,os
+          file=os.environ['RUNNER_TEMP']+'/frozen_197_reader_results.json'
+          with open(file) as f: result=json.load(f)
+          print("## Source-deprived 197 reader (manual artifact, public development pilot)")
+          print("Frozen artifact SHA: "+result["frozen_commit"])
+          print("Model: "+result["model"])
+          print(f"Actual responses: {result['responses']}; elapsed seconds (download+inference): {result['elapsed_seconds']}")
+          print("| Track / condition | Exact | JSON valid | Mean tokens |")
+          print("|---|---:|---:|---:|")
+          for name,v in result["summary"].items():
+              print(f"| {name} | {v['correct']}/{v['tasks']} | {v['valid']}/{v['tasks']} | {v['mean_input_tokens']:.0f} |")
+          print("NO full source theorem verification; NO statistical claim; prompt tokens unmatched.")
+          PYCODE
+      - name: Save raw responses and mathematics data for audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frozen-197-independent-reader-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/frozen_197_reader_results.json
+            ${{ runner.temp }}/consumer_197/metadata.json
+            ${{ runner.temp }}/consumer_197/oracle_diagnostics.json
+          if-no-files-found: warn
+          retention-days: 21
