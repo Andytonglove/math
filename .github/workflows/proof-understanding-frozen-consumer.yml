@@ -1,0 +1,59 @@
+name: Frozen Artifact → Independent Mathematical Consumer (197)
+on:
+  push:
+    branches:
+      - research/proof-understanding-pilot
+    paths:
+      - research/proof_understanding/design_v1/frozen/**
+      - research/proof_understanding/design_v1/consumer/**
+      - .github/workflows/proof-understanding-frozen-consumer.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  frozen-consumer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            research/proof_understanding/design_v1/frozen
+            research/proof_understanding/design_v1/consumer
+            research/proof_understanding/scripts/s3_operator_transfer.py
+            preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/06-cellular-automata.tex
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run frozen-artifact, source isolation, and two-way oracle tests
+        run: python3 -m unittest discover -s research/proof_understanding/design_v1/consumer/tests -p "test_*.py" -v
+      - name: Generate mathematically exact development prompts and separate gold
+        run: |
+          python3 research/proof_understanding/design_v1/consumer/generate_197.py \
+            --repo-root . --bases 12 --output-dir "${{ runner.temp }}/consumer_197"
+      - name: Publish transparent run summary
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,os
+          p=os.environ['RUNNER_TEMP']+'/consumer_197'
+          with open(p+'/metadata.json') as f: m=json.load(f)
+          with open(p+'/oracle_diagnostics.json') as f: d=json.load(f)
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as out:
+              print("## Frozen artifact → source-deprived consumer development",file=out)
+              print("Freeze commit: "+m['freeze_commit'],file=out)
+              print("Artifact was manually authored; no independent model has been run in this job.",file=out)
+              print("Generated tasks: "+str(m['tasks'])+"; prompt records: "+str(m['prompt_records']),file=out)
+              print("Two independent exact-oracle agreements: "+str(d['verified_two_way_checks']),file=out)
+              print("Unique answer masks by operator track: "+str(d['unique_masks']),file=out)
+              print("Advanced source theorem independently verified: False",file=out)
+          PY
+      - name: Preserve developer data and checks
+        uses: actions/upload-artifact@v4
+        with:
+          name: frozen-197-development-${{ github.run_id }}
+          path: ${{ runner.temp }}/consumer_197/*
+          retention-days: 21
