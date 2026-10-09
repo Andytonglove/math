@@ -1,1 +1,17 @@
-{"schema_version":"0.2","project":"Understanding AI-Generated Mathematical Proofs","date":"2026-10-09","round_1":"completed_adversarial_mathematical_transfer","next":"freeze_artifact_before_independent_reader_test","model_main_effect":"not_measured","paid_inference":"not_authorized"}
+{
+  "schema_version": "0.2",
+  "project": "Understanding AI-Generated Mathematical Proofs",
+  "date": "2026-10-10",
+  "round_1": "completed_adversarial_mathematical_transfer",
+  "next": "freeze_semantically_scoped_artifact_before_independent_consumer_experiment",
+  "model_main_effect": "not_measured",
+  "paid_inference": "not_authorized",
+  "semantic_contract_review": {
+    "status": "passed_restricted_local_diagnostics",
+    "source": "arxiv:2610.08144v1",
+    "cases": 5,
+    "unit_tests": 6,
+    "run_id": 37958200358,
+    "full_equivalence": "not_established"
+  }
+}

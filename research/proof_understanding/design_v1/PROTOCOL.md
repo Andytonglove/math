@@ -26,3 +26,16 @@ Background; Statement; full selected Source; budget-matched Extract; ordinary Su
 A useful artifact may retain source-level utility at lower reading cost instead of beating an unlimited source reader. Report construction and amortized reuse costs separately. No human benefit is inferred from machine consumer results.
 
 The old 0.5B/1.5B experiment is not a test of this protocol: contexts were manually prepared paraphrases and not independently frozen; all math task definitions were in the prompt; no true artifact-only reuse effect was isolated. The present two samples are manual development artifacts, not automatic-method results.
+
+
+## 2026-10-10 semantic contract gate (mandatory before artifact freeze)
+
+Record the original natural-language theorem as stated, with mathematical domains, definitions, hypotheses, quantifier order, regularity requirements and conventions. Where Lean artifacts exist, record their exact formal statement, trusted axioms and evidence scope; do not equate compilation of a different theorem with source verification.
+
+Separate *statement correspondence* from *proof-method correspondence*: a valid alternative proof of a true theorem may be unfaithful to a false natural-language argument. The correct response to false source reasoning is to document the failure; a repaired proof must be a separately flagged contribution rather than a covert replacement.
+
+Allow multiple simultaneously valid findings: different quantifier scope, extra RHS dependency, stronger input premise, different proof technique, or undefined source term. A simple surface mismatch does NOT always order full statements logically. Unresolved semantic bridges remain UNKNOWN with source anchors and explicit evidence tier. Do not turn a failed proof search into a theorem counterexample.
+
+The A.3/A.4 hierarchy in arXiv:2610.08144 is an unrestricted definedness obstacle, not a prohibition on partial scoped checking. We do not promise a complete semantics-preserving NL/Lean translator. Evaluate selective accuracy jointly with useful coverage, and compare artifact-only reuse against information-budget matched prose and source snippets.
+
+Add negative controls with invalid natural-language reasoning but true conclusions, source/formal derivative mismatch, unproven minimum-existence presupposition and different proof methods. The local instrument in semantic_bridge/ supports only five specific cases. A clean CI run is NOT a certificate that a whole research source or extracted mathematical mechanism is correct. The independent-reader transfer experiment is still outstanding.

@@ -110,3 +110,16 @@ Graph 只在能够表达作用域、合取义务、分情况穷尽性、量词�
 继续同一研究分支，不改main或上游数学。默认未授权付费模型/API/GPU。小模型方便运行不代表适合任务。每轮保留原始输出、版本、哈希、parse变更、实际命令和失败记录。源码锚点并不证明语义边正确，CI成功并不证明数学命题正确。
 
 最终用一句话衡量进展：本轮交付的工件，让另一个主体获得哪一项可检查的数学能力；为此需要相信什么、读取什么、付出多少成本？
+
+
+## 11. 10 月 10 日新约束：语义忠实、可判定性与输出风险
+
+用户找到 arXiv:2610.08144v1, Navier–Stokes Lost in Translation（2026-10-06）。本文对一类数学对象存在性前提的统一识别给出 Sigma^0_2-complete 的子问题，附录 A.4 扩展到任意高的有限算术层级。不能把它误写成每个具体命题的形式化都比停机问题难，更不能承诺我们解决通用 NL/Lean 语义等价。
+
+这不改变核心研究名 Understanding AI-Generated Mathematical Proofs：我们追求的是可验证、可继承、可用于进一步推理的数学理解工件。新的限制是 **输出前必须经过 Semantic Contract Gate**，分别核对原论文命题、Lean 实际命题、原论证机制和提炼工件。强化/弱化前提、偏移的量词、增加的正则性需求、改变的证明方法、未定义的对象都需要独立类型化记录。
+
+新实验要求：(1) 真实 source-faithfulness 的负样例，不能偷偷改错；(2) UNKNOWN 是真实状态，不把“没找到证明”当成反例；(3) 不能靠给 artifact 更多信息战胜长度匹配的摘要与摘录；(4) 在冻结工件之后才确定 held-out 测试问题；(5) 评价忠实率、覆盖率、无依据认证率、独立数学迁移和总通信成本。
+
+本轮已经检查 NavierStokesAndEuler 固定 commit f9e8bc5 的相关 Lean 声明，并建立五项本地例子、六个单元测试，CI 完成成功：https://github.com/Andytonglove/math/actions/runs/37958200358 。这是有限局部验证，绝不是 NS 全文正确性判断。更详细的新文献矩阵和记录分别在 design_v1/evidence/RELATED_WORK_2026_10_10.md、design_v1/reports/2026-10-10_semantic_bridge.md。
+
+与 Beyond Compilation、FaithformBench、Robust Proof Autoformalization、The Faithfulness Gap、ProofFlow、LeanArchitect 的对比说明：做通用 NL/Lean mismatch detector、图或局部扰动 benchmark 不能算突破。关键未完成目标依旧是 **忠实冻结工件后，在无原证明的独立数学任务中观察到有效迁移**。优先做这个，暂停无关 Graph 扩充。

@@ -7,3 +7,8 @@ Primary deliverables: the research overview and protocol (MASTER_PLAN.md, PROTOC
 Our primary output is an evidence-carrying mathematical abstraction with claim contract, explanatory mechanism, proof obligations, condition boundaries, reusable results, evidence and unresolved questions. A graph is optional. The final mathematical experiment must freeze an artifact BEFORE new structural transfer queries are selected; no such independent model result is currently available.
 
 Source commit 79b8d182b49e7184708bd22bfec1e9a9b1d41994. This version pins provenance, not validity of the source's advanced mathematical theorems. Old CPU model tests did not show graph or source-context benefit. Do not convert this negative diagnostic into a sweeping incapability claim.
+
+
+## Added October 10: Semantic Contract gate
+
+See semantic_bridge/README.md and evidence/RELATED_WORK_2026_10_10.md. We distinguish the original mathematical theorem, Lean's encoded theorem, the written proof method and the exported understanding artifact. Universal semantic equivalence is not guaranteed. Five local audit cards and six exact/source-scoped checks passed; full NL/Lean correspondence and held-out artifact-only transfer are still unmeasured.
