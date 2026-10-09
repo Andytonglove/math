@@ -6,6 +6,7 @@ This is a public deterministic developer pilot, not a blind benchmark.
 from __future__ import annotations
 from collections import Counter
 from hashlib import sha1,sha256
+from itertools import permutations
 from pathlib import Path
 from random import Random
 import argparse,json,sys
@@ -94,13 +95,36 @@ def exact_direct(a:int,b:int,h:int,track:str)->int:
     raise ValueError("unknown operator track")
 
 def independent_oracle(a:int,b:int,h:int,track:str)->int:
-    x=1<<h
+    """Second implementation with fresh tuple permutations, no imported act/mul."""
+    perms=tuple(permutations((0,1,2)))
+    ix={p:i for i,p in enumerate(perms)}
+    def compose(p,q):
+        return tuple(p[q[t]] for t in range(3))
+    def basis_action(mask,vector,left):
+        out=0
+        for gi,g in enumerate(perms):
+            bit=0
+            for ui,u in enumerate(perms):
+                if (mask>>ui)&1:
+                    target=compose(u,g) if left else compose(g,u)
+                    bit^=(vector>>ix[target])&1
+            out|=bit<<gi
+        return out
+    def basis_product(x,y):
+        out=0
+        for ui,u in enumerate(perms):
+            if (x>>ui)&1:
+                for vi,v in enumerate(perms):
+                    if (y>>vi)&1:
+                        out^=1<<ix[compose(u,v)]
+        return out
+    delta=1<<h
     if track=="right":
-        return act(mul(a,b),x,left=False)
+        return basis_action(basis_product(a,b),delta,False)
     if track=="left":
-        return act(mul(b,a),x,left=True)
+        return basis_action(basis_product(b,a),delta,True)
     if track=="mixed":
-        return act(b,act(a,x,left=False),left=True)
+        return basis_action(b,basis_action(a,delta,False),True)
     raise ValueError("unknown operator track")
 
 def build(root:Path,bases:int=12)->dict:
