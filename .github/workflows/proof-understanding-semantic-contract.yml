@@ -1,0 +1,39 @@
+name: Proof Understanding — Semantic Contract Audit
+on:
+  push:
+    branches:
+      - research/proof-understanding-pilot
+    paths:
+      - research/proof_understanding/design_v1/semantic_bridge/**
+      - .github/workflows/proof-understanding-semantic-contract.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  semantic-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            research/proof_understanding/design_v1/semantic_bridge
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run exact restricted-contract unit tests
+        run: python3 -m unittest discover -s research/proof_understanding/design_v1/semantic_bridge/tests -p "test_*.py" -v
+      - name: Execute five-case scoped semantic-contract audit
+        run: |
+          python3 research/proof_understanding/design_v1/semantic_bridge/contract_audit.py \
+            --input research/proof_understanding/design_v1/semantic_bridge/cases_v0.json \
+            --output "${{ runner.temp }}/semantic_contract_audit.json"
+      - name: Persist source-scoped local evidence report
+        uses: actions/upload-artifact@v4
+        with:
+          name: semantic-contract-audit-${{ github.run_id }}
+          path: ${{ runner.temp }}/semantic_contract_audit.json
+          retention-days: 14
