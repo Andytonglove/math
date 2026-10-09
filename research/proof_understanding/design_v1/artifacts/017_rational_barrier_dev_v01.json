@@ -1,0 +1,89 @@
+{
+  "schema_version": "0.1",
+  "artifact_id": "017-rational-barrier-dev-v01",
+  "artifact_provenance": {
+    "creation": "manually analyzed research proof; not auto-extracted",
+    "eval_visibility": "public development; tests known before artifact freeze",
+    "source_family": "017",
+    "source_path": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/conclusion.tex",
+    "source_anchor": "par:constants",
+    "source_advanced_theorem_verified": false
+  },
+  "claim_contract": {
+    "objects": "rational A, theta, nu and rational-coefficient barrier polynomial f",
+    "source_special_case": "f(A)=A^2; 0<theta<A<1; A^2<theta; nu*(A-theta)>1-theta",
+    "extension_assumptions": "f(A)=sum_i w_i*A^(r_i); w_i positive rational; sum_i w_i=1; integer r_i>=2",
+    "conclusion": "rational feasibility iff nu > s/(s-1), s=sum_i w_i*r_i",
+    "scope": "local auxiliary-parameter feasibility ONLY, not a theorem about pi"
+  },
+  "mechanism": {
+    "key_object": "gap ratio (A-theta)/(1-theta); endpoint slope plus a GLOBAL tangent certificate",
+    "tangent_certificate": "f(A)-s*A+s-1=(1-A)^2*sum_i w_i*sum_{k=0}^{r_i-2}(r_i-1-k)*A^k>0",
+    "necessity": "theta>f(A) and global tangent inequality imply (A-theta)/(1-theta)<(s-1)/s",
+    "sufficiency": "rational A approaches 1 from below, then choose theta in (f(A), min(A,(nu*A-1)/(nu-1)))",
+    "general_fixed_A": "With b=max(0,f(A)), 0<A<1 and b<A, rational theta feasible iff nu>(1-b)/(A-b).",
+    "general_global": "nu>inf_A (1-b(A))/(A-b(A)) over rational admissible A; +infinity if none"
+  },
+  "proof_obligations": [
+    {
+      "id": "O1",
+      "statement": "positive coefficient polynomial identity for all rational A in (0,1)",
+      "status": "independently_derived",
+      "evidence": "scripts/convex_barrier_transfer.py certificate"
+    },
+    {
+      "id": "O2",
+      "statement": "strict inequality at threshold excludes nu=s/(s-1)",
+      "status": "independently_derived",
+      "evidence": "samples/017_CONVEXITY.md"
+    },
+    {
+      "id": "O3",
+      "statement": "construct rational witness for every rational nu above threshold",
+      "status": "independently_derived",
+      "evidence": "scripts/convex_barrier_transfer.py witness"
+    },
+    {
+      "id": "O4",
+      "statement": "the high-level source interpolation theorem is correct",
+      "status": "unverified_out_of_scope",
+      "evidence": null
+    }
+  ],
+  "boundaries": [
+    {
+      "condition": "global convexity / tangent-gap premise removed",
+      "consequence": "endpoint derivative alone does not imply sharp threshold",
+      "counterexample": "f(A)=A^2-3*A^3*(1-A)^2; A=3/4; theta=31/64; nu=39/20",
+      "counterexample_gap": "3/1280"
+    },
+    {
+      "condition": "nu equals convex threshold",
+      "consequence": "infeasible by strict inequality"
+    },
+    {
+      "condition": "source theorem replaces A^2 by other barrier",
+      "consequence": "only elementary feasibility analyzed; interpolation, determinant and pi conclusions not transferred"
+    }
+  ],
+  "reusable_results": [
+    "Polynomial mixtures have critical nu=s/(s-1) with s=f'(1).",
+    "Arbitrary rational-valued barriers have fixed-A cutoff (1-max(0,f(A)))/(A-max(0,f(A))).",
+    "A single rational positive witness refutes derivative-only extrapolation without global curvature assumptions."
+  ],
+  "evidence": {
+    "math_derivation": "design_v1/samples/017_CONVEXITY.md",
+    "exact_python": "scripts/convex_barrier_transfer.py",
+    "unit_tests": "tests/test_convex_barrier_transfer.py",
+    "local_ci": "https://github.com/Andytonglove/math/actions/runs/37876715982",
+    "ci_scope": "syntax, provenance and exact local arithmetic, not source advanced theorem"
+  },
+  "unknowns": [
+    "human mathematical comprehension effect unmeasured",
+    "independent artifact-only model utility unmeasured",
+    "automatic producer extraction unimplemented",
+    "validity of advanced source pi proof unverified"
+  ],
+  "confidence_scope": "exact elementary local mathematics, not major source proof",
+  "graph": "optional representation; no graph-specific utility claim"
+}
