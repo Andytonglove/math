@@ -1,0 +1,128 @@
+{
+  "schema_version": "0.2.dev",
+  "frozen_for_independent_evaluation": false,
+  "methodological_note": "Manually authored *development* semantic contracts, not an automatic extraction or independently held-out test set.",
+  "artifacts": [
+    {
+      "artifact_id": "017-auxiliary-convexity-contract-dev-v02",
+      "source": {
+        "repo": "Andytonglove/math",
+        "family": "017",
+        "path": "preprints/The-irrationality-exponent-of-pi-is-2-September-24-2026/build/sections/conclusion.tex",
+        "anchor": "par:constants",
+        "fetched_commit": "79b8d182b49e7184708bd22bfec1e9a9b1d41994"
+      },
+      "source_contract": {
+        "scope": "auxiliary parameter selection within an AI-written pi manuscript",
+        "named_conditions": [
+          "0<theta<A<B<1",
+          "A^2<theta",
+          "nu*(A-theta)>1-theta"
+        ],
+        "conclusion": "authors use feasible rational auxiliary parameters for nu>2",
+        "advanced_theorem_status": "not_independently_reviewed"
+      },
+      "formal_contract": {
+        "lean_statement": "not independently aligned at this auxiliary scope",
+        "statement_correspondence": "unknown",
+        "proof_method_correspondence": "unknown",
+        "lean_kernel_compilation": "not_run_by_this_project"
+      },
+      "mechanism": {
+        "type": "strict_gap_feasibility",
+        "retained": "A^2<theta and nu*(A-theta)>1-theta; global tangent inequality for extensions",
+        "extension": "positive rational mixtures f(A)=sum w_i*A^(r_i) with s=sum w_i*r_i give elementary threshold nu>s/(s-1)",
+        "extension_status": "independently_proved_local_mathematics_not_an_extension_of_pi_theorem"
+      },
+      "obligations": [
+        {
+          "id": "017-O1",
+          "assertion": "local rational feasibility threshold for positive monomial mixtures",
+          "state": "independently_local_proved"
+        },
+        {
+          "id": "017-O2",
+          "assertion": "all geometric interpolation and determinant lemmas behind the source's pi claim",
+          "state": "unknown"
+        },
+        {
+          "id": "017-O3",
+          "assertion": "equivalence of this entire source paper with its associated Lean result",
+          "state": "unknown"
+        }
+      ],
+      "no_silent_repair": true,
+      "excluded_conclusions": [
+        "not a new irrationality bound for pi",
+        "not a certificate that the advanced original proof is correct"
+      ],
+      "evidence": [
+        "research/proof_understanding/design_v1/samples/017_CONVEXITY.md",
+        "research/proof_understanding/design_v1/MANUSCRIPT.md Section 4"
+      ]
+    },
+    {
+      "artifact_id": "197-group-algebra-operator-contract-dev-v02",
+      "source": {
+        "repo": "Andytonglove/math",
+        "family": "197",
+        "path": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/06-cellular-automata.tex",
+        "anchor": "lem:ca-representation",
+        "fetched_commit": "79b8d182b49e7184708bd22bfec1e9a9b1d41994"
+      },
+      "source_contract": {
+        "scope": "conditional transfer of a,b in K[G], not existence of an exotic counterexample",
+        "named_conditions": [
+          "group G",
+          "field K",
+          "finite support for algebra element c",
+          "right-neighbor convention x(g*u)"
+        ],
+        "conclusion": "T_c composed with T_d equals T_(c*d); if a*b=1 and b*a!=1 then T_b is injective but not surjective",
+        "advanced_theorem_status": "source's existence construction not independently reviewed"
+      },
+      "formal_contract": {
+        "lean_statement": "not independently aligned at this local operator lemma",
+        "statement_correspondence": "unknown",
+        "proof_method_correspondence": "unknown",
+        "lean_kernel_compilation": "not_run_by_this_project"
+      },
+      "mechanism": {
+        "type": "noncommutative_operator_convention",
+        "retained": "finite support, right-neighbor order, delta basis detects nonzero coefficients, inverse defect",
+        "boundary": "left-neighbor convention x(u*g) changes to an anti-homomorphism",
+        "extension_status": "conditional algebra independently rederived but source exotic witness existence unverified"
+      },
+      "obligations": [
+        {
+          "id": "197-O1",
+          "assertion": "right-neighbor composition T_c T_d=T_(cd) from finite regrouping",
+          "state": "independently_local_proved"
+        },
+        {
+          "id": "197-O2",
+          "assertion": "finite-support and delta-function coefficient recovery",
+          "state": "independently_local_proved"
+        },
+        {
+          "id": "197-O3",
+          "assertion": "existence of source's claimed finitely presented exotic G,a,b",
+          "state": "unknown"
+        },
+        {
+          "id": "197-O4",
+          "assertion": "equivalence of natural language and all related Lean formal declarations",
+          "state": "unknown"
+        }
+      ],
+      "no_silent_repair": true,
+      "excluded_conclusions": [
+        "finite S3 checks do not establish exotic counterexample",
+        "source's large construction not certified"
+      ],
+      "evidence": [
+        "research/proof_understanding/design_v1/samples/197_OPERATOR.md"
+      ]
+    }
+  ]
+}
