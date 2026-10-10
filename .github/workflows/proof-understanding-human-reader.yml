@@ -1,0 +1,36 @@
+name: Proof Understanding - Human Reader Guide Gates
+on:
+  push:
+    branches:
+      - research/proof-understanding-pilot
+    paths:
+      - research/proof_understanding/design_v1/human_reader/**
+      - research/proof_understanding/design_v1/artifacts/017_rational_barrier_dev_v01.json
+      - research/proof_understanding/design_v1/producer/data/produced_197_2026-10-10.json
+      - .github/workflows/proof-understanding-human-reader.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  guide-provenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            research/proof_understanding/design_v1/human_reader
+            research/proof_understanding/design_v1/artifacts/017_rational_barrier_dev_v01.json
+            research/proof_understanding/design_v1/producer/data/produced_197_2026-10-10.json
+            preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/06-cellular-automata.tex
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run 11 coverage and negative-gate tests
+        run: python3 -m unittest discover -s research/proof_understanding/design_v1/human_reader/tests -p 'test_*.py' -v
+      - name: Check live source SHA, evidence links and unresolved disclosures
+        run: python3 research/proof_understanding/design_v1/human_reader/check_guides.py --repo-root . --require-original
