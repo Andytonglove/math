@@ -1,0 +1,127 @@
+{
+  "schema": "source197_scoped_producer_v1",
+  "producer_kind": "automatic deterministic template-extractor (limited 197 TeX syntax)",
+  "source": {
+    "path": "preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/06-cellular-automata.tex",
+    "sha256": "f24be1d93784302e0700c0223023c0f4f49a9c2e342e21be04a5627ae0492775",
+    "required_anchors": {
+      "eq:ca-operator": {
+        "line": 21,
+        "sha256": "3c9c0c21a56b21c49848c7ab58ff4ad1bf55b729b002df96e5269c5e4b8f2ece"
+      },
+      "eq:ca-composition": {
+        "line": 34,
+        "sha256": "c3243722f30897ac0db4f858329af1d0447cd45cf6e470f0909331fe0e681c14"
+      },
+      "eq:ca-coefficient": {
+        "line": 54,
+        "sha256": "6675c9d510f2ae7c050663a5f2778458634b0333a33067bede39494d8834a9ec"
+      },
+      "eq:ca-image": {
+        "line": 74,
+        "sha256": "5c796765a503fea02d2a7f381399041362548de5b359c9728b13b8f1868946d6"
+      },
+      "eq:ca-leftinverse": {
+        "line": 87,
+        "sha256": "efbd26625aa8124bd394a1c03a9ef7a9bf6f47296c955a15821b5150eea619de"
+      },
+      "lem:ca-representation": {
+        "line": 28
+      },
+      "prop:ca-transfer": {
+        "line": 64
+      }
+    },
+    "source_kind": "original AI manuscript; not verified"
+  },
+  "gate": {
+    "status": "PASSED_SCOPED",
+    "failures": [],
+    "source_alignment": "restricted textual/syntactic checks only; no global semantic equivalence"
+  },
+  "claims": [
+    {
+      "id": "right_homomorphism",
+      "premises": [
+        "unital associative monoid",
+        "field K",
+        "finitely supported coefficients",
+        "right-neighbor T_c"
+      ],
+      "statement": "T_c composed T_d = T_(c*d)",
+      "source_status": "source_lemma_plus_scoped_proof_step_detected",
+      "evidence": "index_word_certificate_plus_human_stated_finite_sum_argument"
+    },
+    {
+      "id": "faithful",
+      "premises": [
+        "monoid identity",
+        "field K",
+        "delta configurations available"
+      ],
+      "statement": "(T_c delta_h)(1)=c_h, so c -> T_c injective",
+      "source_status": "source_coefficient_equation_detected",
+      "evidence": "delta_response_direct_calculation"
+    },
+    {
+      "id": "split_injective",
+      "premises": [
+        "a*b=1",
+        "right_homomorphism"
+      ],
+      "statement": "T_b injective with left inverse T_a",
+      "source_status": "source_proposition_premise_detected",
+      "evidence": "conditional_algebra"
+    },
+    {
+      "id": "image",
+      "premises": [
+        "a*b=1",
+        "right_homomorphism"
+      ],
+      "statement": "im(T_b)=Fix(T_(b*a))",
+      "source_status": "source_image_equation_detected",
+      "evidence": "conditional_algebra"
+    },
+    {
+      "id": "non_surjective",
+      "premises": [
+        "a*b=1",
+        "b*a != 1",
+        "faithfulness"
+      ],
+      "statement": "T_b injective but not surjective",
+      "source_status": "source_conditional_claim_detected",
+      "evidence": "delta_h_missing_image_conditional_argument"
+    }
+  ],
+  "symbolic_check": {
+    "right_composition": [
+      "g",
+      "u",
+      "v"
+    ],
+    "left_anti_composition": [
+      "v",
+      "u",
+      "g"
+    ],
+    "left_right_commutation": [
+      "v",
+      "g",
+      "u"
+    ],
+    "certificate_scope": "free-monoid index words; coefficients and finite sums assumed"
+  },
+  "transfer": {
+    "target_carrier": "unital associative monoid",
+    "status": "conditional_abstract_derivation; not quoted as source claim",
+    "mathematical_boundary": "requires actual a*b=1 and b*a!=1 in target monoid algebra; group existence not established"
+  },
+  "unresolved": [
+    "original group algebra witness is not independently verified",
+    "Lean proposition/proof correspondence NOT checked",
+    "template recognizer does not prove mathematical correctness of arbitrary source TeX",
+    "producer extraction effectiveness on unseen papers NOT measured"
+  ]
+}

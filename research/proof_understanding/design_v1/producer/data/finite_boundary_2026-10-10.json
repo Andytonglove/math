@@ -1,0 +1,77 @@
+{
+  "enumeration": {
+    "carrier": "full transformation monoid on a 2-element set",
+    "base_field": "F2",
+    "monoid_size": 4,
+    "algebra_size": 16,
+    "ordered_pairs_examined": 256,
+    "one_sided_inverse_pairs": [
+      {
+        "a_mask": 2,
+        "b_mask": 2,
+        "reverse_is_identity": true
+      },
+      {
+        "a_mask": 4,
+        "b_mask": 4,
+        "reverse_is_identity": true
+      },
+      {
+        "a_mask": 11,
+        "b_mask": 11,
+        "reverse_is_identity": true
+      },
+      {
+        "a_mask": 13,
+        "b_mask": 13,
+        "reverse_is_identity": true
+      }
+    ],
+    "all_two_sided": true,
+    "scope": "finite one-monoid enumeration only, NOT universal proof"
+  },
+  "boundary_cards": [
+    {
+      "case": "source_group_witness",
+      "question": "Does the 197 manuscript establish a particular exotic GROUP algebra witness to this evaluator?",
+      "expected": "UNKNOWN",
+      "evidence": "The advanced source construction and Lean semantics have not been independently audited.",
+      "logic": "epistemic, not a negation of an existence theorem"
+    },
+    {
+      "case": "finite_dim_algebra",
+      "question": "Can a finite-dimensional unital algebra over a field contain ab=1 but ba!=1?",
+      "expected": "NO",
+      "evidence": "L_a o L_b=I on the finite-dimensional vector space; hence L_b is bijective, and L_b o L_a=I, implying ba=1.",
+      "logic": "universal linear algebra proof"
+    },
+    {
+      "case": "infinite_bicyclic_monoid",
+      "question": "Can an infinite MONOID algebra have ab=1 and ba!=1?",
+      "expected": "YES",
+      "evidence": "Transformations L(n)=max(n-1,0), R(n)=n+1 satisfy L o R=Id but R o L !=Id.",
+      "logic": "explicit exact symbolic witness"
+    },
+    {
+      "case": "no_inverse_hypothesis",
+      "question": "Does the right-neighbor operator identity itself imply T_b injective for arbitrary b?",
+      "expected": "NO",
+      "evidence": "Take b=0 in any nontrivial group algebra: T_b=0 on a nonzero configuration space.",
+      "logic": "explicit counterexample"
+    },
+    {
+      "case": "all_fields_are_finite",
+      "question": "Does the operator algebra identity require K to be finite?",
+      "expected": "NO",
+      "evidence": "Each coefficient sum is finite; any field suffices. Finite K is used for the finite alphabet interpretation.",
+      "logic": "direct proof obligation scope"
+    },
+    {
+      "case": "group_to_monoid_advanced",
+      "question": "Does a monoid one-sided inverse certify the original group algebra conjecture counterexample?",
+      "expected": "NO",
+      "evidence": "A monoid need not be a group; the transformation monoid includes non-bijective L.",
+      "logic": "type/domain mismatch"
+    }
+  ]
+}
