@@ -1,9 +1,9 @@
 {
-  "schema_version": "0.3",
+  "schema_version": "0.4",
   "project": "Understanding AI-Generated Mathematical Proofs",
   "date": "2026-10-10",
   "round_1": "completed_adversarial_mathematical_transfer",
-  "next": "Freeze generated source197 artifact; independently design structural held-out source-free transfer tasks; build non-template automatic producer on unseen proof family (017/102), source-error detection and selective UNKNOWN; stronger reader only with explicit authorization.",
+  "next": "Independent mathematical expert review of 017/197 human guides; create a non-template proof-to-explanation producer and equal-information summary/excerpt controls on unseen proof families; preregister objective human comprehension/overconfidence study after ethics and source-validity review. AI reader only secondary, paid models not authorized.",
   "model_main_effect": "unmeasured_due_to_incomplete_previous_reader_and_no_new_model_run",
   "paid_inference": "not_authorized",
   "semantic_contract_review": {
@@ -15,6 +15,54 @@
     "full_equivalence": "not_established"
   },
   "last_iteration": {
+    "identity": "iteration11_human_beneficiary_realignment",
+    "completed_on": "2026-10-10",
+    "artifact_type": "two manually authored source-specific human reading guides",
+    "guides": [
+      "017_READER_GUIDE.md",
+      "197_READER_GUIDE.md"
+    ],
+    "experimental_comparison": "DESIGNED_NOT_EXECUTED",
+    "human_subjects": 0,
+    "human_comprehension_effect": "NOT_MEASURED",
+    "automatic_guide_producer": "NOT_IMPLEMENTED",
+    "previous_197_scoped_machine_producer": "PRESERVED_UNCHANGED",
+    "checked_producer_source_sha": "f24be1d93784302e0700c0223023c0f4f49a9c2e342e21be04a5627ae0492775",
+    "github_human_reader_run": 38020692302,
+    "github_human_reader_tests_passed": 11,
+    "github_human_reader_source_hash_checked": true,
+    "github_pilot_run_after_charter_update": 38020758538,
+    "github_pilot_conclusion": "success",
+    "local_fixture_tests_passed": 11,
+    "locally_recomputed_017_rational_witness_gap": "3/1280",
+    "paid_model_calls": "none",
+    "original_ai_source_modified": false,
+    "main_modified": false,
+    "high_level_source_theorems_verified": false,
+    "lean_equivalence_checked": false,
+    "general_explanation_semantics_verified": false
+  },
+  "round_2": "completed_restricted_source_grounded_producer_and_finite_dim_transfer",
+  "previous_iteration": {
+    "identity": "iteration09_frozen_artifact_and_group_to_monoid_transfer",
+    "frozen_commit": "04fef27eed6f3a10e529f728f3f478cb459f0821",
+    "task_count": 36,
+    "context_records": 144,
+    "unit_tests_last_ci": 21,
+    "independent_oracle": "finite F2[S3] two implementations",
+    "math_transfer": "bicyclic_monoid_exhibits_one_sided_inverse_not_a_group_algebra_example",
+    "reader_run": 37964028280,
+    "reader_run_status": "failed_time_cap_after_10_of_24",
+    "completed_correct": 0,
+    "completed_attempts": 10,
+    "paid_api": "none",
+    "source_advanced_theorem_verified": false,
+    "artifact_only_machine_benefit": "NOT_ESTABLISHED"
+  },
+  "primary_research_goal": "Help human mathematicians understand, audit and responsibly reuse AI-generated proof arguments; mathematical fidelity and calibrated uncertainty take precedence over fluency.",
+  "human_comprehension_effect": "NOT_MEASURED_NO_PARTICIPANTS",
+  "human_proof_explanation_producer": "NOT_ESTABLISHED_manual_development_guides_only",
+  "previous_iteration_10": {
     "identity": "iteration10_scoped_197_automatic_producer",
     "method": "deterministic original-TeX anchor parser; restricted, not learned or general",
     "code_commit": "b315d02471f0b6216b04a6c7089582629a2f8b4e",
@@ -40,22 +88,5 @@
     "paid_inference": "none",
     "artifact_only_model_benefit": "NOT_ESTABLISHED",
     "producer_cross_paper_generalization": "NOT_TESTED"
-  },
-  "round_2": "completed_restricted_source_grounded_producer_and_finite_dim_transfer",
-  "previous_iteration": {
-    "identity": "iteration09_frozen_artifact_and_group_to_monoid_transfer",
-    "frozen_commit": "04fef27eed6f3a10e529f728f3f478cb459f0821",
-    "task_count": 36,
-    "context_records": 144,
-    "unit_tests_last_ci": 21,
-    "independent_oracle": "finite F2[S3] two implementations",
-    "math_transfer": "bicyclic_monoid_exhibits_one_sided_inverse_not_a_group_algebra_example",
-    "reader_run": 37964028280,
-    "reader_run_status": "failed_time_cap_after_10_of_24",
-    "completed_correct": 0,
-    "completed_attempts": 10,
-    "paid_api": "none",
-    "source_advanced_theorem_verified": false,
-    "artifact_only_machine_benefit": "NOT_ESTABLISHED"
   }
 }

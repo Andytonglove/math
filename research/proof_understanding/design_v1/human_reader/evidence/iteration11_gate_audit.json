@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-10",
+  "branch": "research/proof-understanding-pilot",
+  "run_name": "Proof Understanding - Human Reader Guide Gates",
+  "commit": "4a61fa582c326e62d5fbf362f0db33429c424ea1",
+  "github_run_id": 38020692302,
+  "github_url": "https://github.com/Andytonglove/math/actions/runs/38020692302",
+  "test_result_from_log": {
+    "line": "Ran 11 tests in 0.003s",
+    "status": "OK",
+    "methods": 11
+  },
+  "machine_audit_output": {
+    "scope": "provenance+disclosure+source-SHA when available; NOT semantic/human validation",
+    "source197_sha_checked": true,
+    "source197_claim_refs": [
+      "faithful",
+      "image",
+      "non_surjective",
+      "right_homomorphism",
+      "split_injective"
+    ],
+    "source017_obligation_refs": [
+      "O1",
+      "O2",
+      "O3"
+    ],
+    "high_level_source_theorems_verified": false,
+    "human_outcomes_measured": false
+  },
+  "local_fraction_check": {
+    "example": "017 deliberately nonconvex barrier counterexample to derivative-only heuristic",
+    "inputs": {
+      "A": "3/4",
+      "theta": "31/64",
+      "nu": "39/20"
+    },
+    "exact": {
+      "h(A)": "495/1024",
+      "theta_equivalent": "496/1024",
+      "strict_gap": "3/1280"
+    },
+    "scope": "exact rational substitution, not high-level pi theorem"
+  },
+  "broader_pilot_ci": "https://github.com/Andytonglove/math/actions/runs/38020758538",
+  "caveat": "CI checks anchored contracts, content presence and exact source hashes; it neither checks general natural-language math semantics nor measures comprehension in real people."
+}
