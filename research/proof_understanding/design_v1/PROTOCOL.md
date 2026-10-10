@@ -1,3 +1,5 @@
+> **Primary outcome updated 2026-10-10:** The beneficiary is a HUMAN mathematician understanding and critically auditing AI-generated research proofs. The AI consumer track below is a secondary diagnostic of evidence retention, not the primary success metric. See human_reader/HUMAN_EVAL_PROTOCOL.md. No human benefit or AI-to-AI main effect has yet been measured.
+
 # Producer–artifact–consumer protocol v0.1
 
 A source unit is a bounded complete argument with explicit imported assumptions. The producer sees source, background, intended audience and communication budget, but not realized evaluation queries or gold answers. Development queries are allowed and disclosed.

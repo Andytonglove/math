@@ -1,13 +1,23 @@
-# Understanding AI-Generated Mathematical Proofs — Research Charter (v0.2)
+# Understanding AI-Generated Mathematical Proofs — Research Charter (v0.3)
 
 **Project identity:** Understanding AI-Generated Mathematical Proofs.
-**Focus:** Mathematical understanding in AI systems, NOT a graph visualization product and NOT primarily an HCI teaching system.
+**Focus:** Human mathematicians' faithful understanding and auditing of AI-generated mathematical proofs. Machine extraction and AI-to-AI transfer are supporting instruments, not the end goal. This is math-native research, not a generic tutoring UI or graph-visualization product.
 
 ## Core scientific question
 
-Can a model recover the mathematical mechanisms in another AI system's unfamiliar research proof, manipulate them under changed conditions, and transfer them to independently checkable new mathematical problems?
+Can an evidence-grounded explanation of an unfamiliar AI-generated research proof help a human mathematician recover its mechanism, check crucial proof steps, diagnose assumption-dependent failures and correctly recognize unresolved claims—more accurately or efficiently than reading the source or a strong plain-language summary?
 
-Understanding is defined operationally by falsifiable performance, not by fluent paraphrase. We cannot reconstruct the original discovery model's private thinking from its published paper.
+Source-to-artifact recovery by a model, machine-side transfer and exact mathematical oracles are **means** to achieve this human outcome. Human proof comprehension must ultimately be evaluated through objective reader tasks and trust calibration. Fluent explanation and self-reported clarity are insufficient. We cannot reconstruct the original discovery model's private thinking from its published paper.
+
+## Human-facing outcome hierarchy (2026-10-10 clarification)
+
+H0 Provenance: can a reader locate the source step and see exactly what is claimed and what is NOT verified?
+H1 Mechanism: can they explain why an essential construction or invariant was chosen, rather than simply paraphrase the theorem?
+H2 Critical reading: can they correctly identify a missing premise, a reversed argument or an unjustified jump without confusing an invalid proof with a false theorem?
+H3 Controlled reuse: can they apply the mechanism under changed assumptions and justify correct UNKNOWN judgments?
+H4 Measured human benefit: compared with source, token-matched summary and selected excerpt, do humans gain accuracy, calibrated trust or reading efficiency? **Not measured.**
+
+The technical levels below remain useful to validate the mathematical interface and automatic producer. Machine-reader gains do NOT establish H4.
 
 ## Levels of evidence
 
@@ -60,8 +70,12 @@ H3 can be false. If Graph does not help, change or abandon that representation.
 
 Nothing here validates the entire high-difficulty source papers, and no language-model baseline, independent Lean comparator verification or human experiment has been run.
 
-## First go/no-go criterion
+## Revised go/no-go criteria
 
-Find at least one nontrivial, truly source-conditioned **held-out intervention** per selected family, with independent mathematical oracle, such that providing the proof significantly changes the model's ability to solve it relative to B0 and B1. Test B2 before building more graphs. If the effect is absent, revise the scientific question or dataset rather than growing the architecture.
+**Technical readiness:** Produce faithful and bounded reading guides from novel proof units (preferably via a producer not hardcoded to the source family), with independent local mathematical evidence, conditional failure analysis and honest unknowns. Generic fluent summaries or a source-anchor match alone do not pass.
+
+**Primary scientific outcome:** Run an ethically appropriate and independently graded human-reader comparison against source-only, token-matched summary and token-matched excerpt, scoring proof mechanism, audit/transfer tasks, warranted abstention, overconfidence and time. No study, power claim or benefit exists yet. Public 017/197 guides are demonstrations, not blinded evaluation stimuli.
+
+AI-to-AI transfer and Graph remain optional technical diagnostics. Negative human comprehension results or overconfidence harms require method revision rather than hiding behind machine accuracy.
 
 This project may eventually become a series in the style of Physics of Language Models, but not before reproducible scientific phenomena justify that structure.

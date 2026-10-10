@@ -1,3 +1,5 @@
+> **2026-10-10 research clarification:** The core scientific objective is to enable HUMAN mathematical researchers to understand, check and responsibly use unfamiliar AI-generated proofs. Automatic mechanism extraction, evidence-carrying abstractions and AI-to-AI transfer are supporting techniques, not the endpoint. Objective human comprehension, conditional reasoning, flaw localization and calibrated UNKNOWN—compared with source and strong equal-budget summaries—will be the eventual primary evaluation. No human testing is claimed. New public development guides and protocol are in design_v1/human_reader/.
+
 # Understanding AI-Generated Mathematical Proofs：总行动方案 v0.1
 
 日期：2026-10-08。当前为研究框架、完整开发样例、独立局部数学推导、归档实验复核和 manuscript 工作稿；自动生成效果及冻结工件后的独立迁移效果尚未测量。
