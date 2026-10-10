@@ -1,0 +1,51 @@
+name: Proof Understanding - Scoped Automatic Producer
+on:
+  push:
+    branches:
+      - research/proof-understanding-pilot
+    paths:
+      - research/proof_understanding/design_v1/producer/**
+      - .github/workflows/proof-understanding-producer.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  scoped-producer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            research/proof_understanding/design_v1/producer
+            preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/06-cellular-automata.tex
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run symbolic and mutation-gate tests against real 197 TeX
+        run: python3 -m unittest discover -s research/proof_understanding/design_v1/producer/tests -p "test_*.py" -v
+      - name: Produce actual source-scoped mathematical contract
+        run: |
+          mkdir -p research/proof_understanding/design_v1/producer/generated
+          python3 research/proof_understanding/design_v1/producer/source197_producer.py \
+            --source preprints/A-Counterexample-to-Kaplanskys-Direct-Finiteness-Conjecture-in-Characteristic-Two-September-23-2026/build/sections/06-cellular-automata.tex \
+            --output research/proof_understanding/design_v1/producer/generated/produced_197.json
+          python3 research/proof_understanding/design_v1/producer/finite_boundary.py \
+            > research/proof_understanding/design_v1/producer/generated/finite_boundary.json
+      - name: Emit raw generated source contract in logs for independent audit
+        run: |
+          echo 'PRODUCED_197_JSON_START'
+          cat research/proof_understanding/design_v1/producer/generated/produced_197.json
+          echo 'PRODUCED_197_JSON_END'
+          echo 'FINITE_BOUNDARY_JSON_START'
+          cat research/proof_understanding/design_v1/producer/generated/finite_boundary.json
+          echo 'FINITE_BOUNDARY_JSON_END'
+      - name: Preserve raw deterministic data
+        uses: actions/upload-artifact@v4
+        with:
+          name: scoped-source197-producer
+          path: research/proof_understanding/design_v1/producer/generated/*.json
+          retention-days: 21
