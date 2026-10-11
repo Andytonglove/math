@@ -1,0 +1,79 @@
+{
+  "cases": [
+    {
+      "argument": "Since theta>A^2, (A-theta)/(1-theta)<A/(1+A)<1/2 for all 0<A<1.",
+      "family": "017",
+      "id": "017_strict_threshold",
+      "scope": "LOCAL_AUXILIARY",
+      "statement": "For f(A)=A^2, there are no rational 0<theta<A<1 satisfying f(A)<theta and 2(A-theta)>1-theta.",
+      "task": "Independently judge the stated claim and whether the stated argument supports it."
+    },
+    {
+      "argument": "Because theta>A^2, A-theta>A-A^2, giving the required upper bound on width.",
+      "family": "017",
+      "id": "017_true_claim_bad_step",
+      "scope": "LOCAL_AUXILIARY",
+      "statement": "For f(A)=A^2, any feasible nu must be strictly greater than 2.",
+      "task": "Judge the claim and this particular proof step separately. A broken proof need not mean a false claim."
+    },
+    {
+      "argument": "The endpoint derivative f'(1)=2 by itself enforces the same global tangent bound as A^2.",
+      "family": "017",
+      "id": "017_false_slope_extension",
+      "scope": "RESEARCHER_COUNTERFACTUAL",
+      "statement": "Every differentiable f with f(1)=1 and f'(1)=2 requires nu>2 for rational feasibility.",
+      "task": "Find an exact counterexample or state why one cannot yet be found."
+    },
+    {
+      "argument": "The local parameter-barrier proposition was independently checked.",
+      "family": "017",
+      "id": "017_source_main_unknown",
+      "scope": "SOURCE_HIGH_LEVEL",
+      "statement": "The complete high-difficulty pi theorem asserted by source family 017 is mathematically correct.",
+      "task": "What, exactly, does the local certificate justify about the source paper?"
+    },
+    {
+      "argument": "Both sides evaluate at g to x(v(gu))=x((vg)u) by associativity.",
+      "family": "197",
+      "id": "197_mixed_commuting",
+      "scope": "LOCAL_OPERATOR",
+      "statement": "With right T_u x(g)=x(gu) and left S_v x(g)=x(vg), T_u S_v=S_v T_u on any monoid.",
+      "task": "Check both statement and argument, including the order of multiplication."
+    },
+    {
+      "argument": "The operators commute because ugv=vgu for all u,v,g (the factors may be swapped).",
+      "family": "197",
+      "id": "197_true_claim_bad_step",
+      "scope": "LOCAL_OPERATOR",
+      "statement": "With T_u x(g)=x(gu) and S_v x(g)=x(vg), T_u S_v=S_v T_u on any monoid.",
+      "task": "Find a noncommutative witness invalidating the suggested step, then separately assess the theorem."
+    },
+    {
+      "argument": "Since T_a T_b=I, T_b is injective; therefore it cannot be surjective.",
+      "family": "197",
+      "id": "197_missing_second_inverse_condition",
+      "scope": "RESEARCHER_COUNTERFACTUAL",
+      "statement": "For all unital group algebras, ab=1 alone guarantees T_b is not surjective.",
+      "task": "Audit the purported injective-to-nonsurjective inference and give a witness if false."
+    },
+    {
+      "argument": "On N, let L(n)=max(n-1,0), R(n)=n+1; with multiplication composition, [L][R]=[identity], but [R][L]!=[identity].",
+      "family": "197",
+      "id": "197_monoid_witness",
+      "scope": "CONDITIONAL_EXTENSION",
+      "statement": "An infinite transformation MONOID algebra can contain ab=1 but ba!=1.",
+      "task": "Check the witness and explain why it is not a counterexample to a claim about GROUP algebras."
+    },
+    {
+      "argument": "An infinite MONOID algebra has a one-sided-inverse witness, and a source-local conditional operator lemma was checked.",
+      "family": "197",
+      "id": "197_group_existence_unknown",
+      "scope": "SOURCE_HIGH_LEVEL",
+      "statement": "In the particular infinite GROUP algebra proposed by source 197, the asserted one-sided inverse pair exists.",
+      "task": "Decide whether the claimed source-specific group existence has been established, refuted, or not independently audited."
+    }
+  ],
+  "human_outcomes": "NOT_MEASURED",
+  "mathematical_scope": "two manually studied local source-inspired families; source high-level truth unverified",
+  "purpose": "public_development_only"
+}

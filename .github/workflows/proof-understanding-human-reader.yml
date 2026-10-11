@@ -30,7 +30,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Run 11 coverage and negative-gate tests
+      - name: Run guide provenance and dual-axis math audit tests
         run: python3 -m unittest discover -s research/proof_understanding/design_v1/human_reader/tests -p 'test_*.py' -v
+      - name: Verify published audit development data is reproducible
+        run: |
+          python3 research/proof_understanding/design_v1/human_reader/audit_lab/audit_cases.py --output /tmp/proof-audit-public-dev > /tmp/proof-audit-diagnostics.json
+          for name in cards_public_dev.json gold_public_dev.json checks_public_dev.json; do
+            diff -u "research/proof_understanding/design_v1/human_reader/audit_lab/data/$name" "/tmp/proof-audit-public-dev/$name"
+          done
       - name: Check live source SHA, evidence links and unresolved disclosures
         run: python3 research/proof_understanding/design_v1/human_reader/check_guides.py --repo-root . --require-original
