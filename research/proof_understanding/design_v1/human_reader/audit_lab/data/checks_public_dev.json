@@ -1,0 +1,64 @@
+{
+  "count_cards": 9,
+  "exact_rational": {
+    "invalid_proof_step": {
+      "A": "3/4",
+      "A_minus_A_squared": "3/16",
+      "A_minus_theta": "1/8",
+      "theta": "5/8"
+    },
+    "nonconvex": {
+      "A": "3/4",
+      "f_A": "495/1024",
+      "nu": "39/20",
+      "slack": "3/1280",
+      "theta": "31/64"
+    },
+    "positive_square_example": {
+      "A": "7/8",
+      "nu": "5/2",
+      "theta": "25/32"
+    }
+  },
+  "finite_permutations": {
+    "false_commutation_witness": {
+      "g": [
+        0,
+        1,
+        2
+      ],
+      "u": [
+        1,
+        0,
+        2
+      ],
+      "uv": [
+        1,
+        2,
+        0
+      ],
+      "v": [
+        0,
+        2,
+        1
+      ],
+      "vu": [
+        2,
+        0,
+        1
+      ]
+    },
+    "s3_associativity_instances": 216
+  },
+  "human_participants": 0,
+  "monoid_shift": {
+    "LR_identity_symbolic": "L(R(n))=L(n+1)=n for all n>=0",
+    "RL_failure_witness": {
+      "R_L_n": 1,
+      "n": 0
+    },
+    "prefix_checked": 64
+  },
+  "universal_arguments": "human-readable derivations in answer key, not machine/formal proofs",
+  "verified_by_machine": "local arithmetic and counterexample checks, NOT universal source theorem verification"
+}
